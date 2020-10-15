@@ -1,4 +1,4 @@
-from flask import Flask, url_for
+from flask import Flask, url_for, render_template
 from app.ejp1.ordenacionMatrices import ordenarMatrices
 from app.ejp1.cribaEratostenes import obtenerPrimos
 from app.ejp1.fibonacciFichero import fibonacci
@@ -101,3 +101,6 @@ def ejercicio6():
     salida = salida.replace("\n", "<br>")
     return salida
 
+@app.errorhandler(404)
+def page_not_found(e):
+    return render_template("404.html"), 404
