@@ -11,6 +11,7 @@ def generarCabeceras(titulo):
     return "<html>" \
              "<head>" \
              "<title>" + titulo + "</title>" \
+             "<link rel='stylesheet' href='" + url_for('static', filename='general.css') + "'>" \
              "</head>" \
              "<body>"
 @app.route('/')

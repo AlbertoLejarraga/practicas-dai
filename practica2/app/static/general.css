@@ -1,0 +1,11 @@
+body{
+    text-align: center;
+}
+h1{
+    border: black solid;
+    padding: 0.2em;
+}
+a:hover{
+    font-weight: bold;
+    color: red;
+}
