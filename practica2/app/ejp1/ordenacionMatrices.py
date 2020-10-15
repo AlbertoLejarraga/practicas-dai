@@ -73,27 +73,31 @@ def ordenar(matriz, algoritmo):
 
 def ordenarMatrices(matriz=None):
     '''Función que realiza el ejercicio 2 de ordenación de matrices'''
+    salida = ""
     if matriz is None:
         #se genera una matriz de números de tamaño dado por el usuario
         tamano = int (input("Introduzca el tamaño de la matriz"))
         if tamano > 1:
             matriz = [random.randint(-3*tamano, 3*tamano) for i in range(tamano)]
-            print ("Esta es la matriz: ")
-            print (matriz)
+            salida += "Esta es la matriz: \n"
+            salida += str(matriz)
         else:
-            print("Tamaño incorrecto")
+            salida += "\nTamaño incorrecto\n"
             exit()
+    else:
+        matriz = [int(elem) for elem in matriz]
     #se determinan los algoritmos de ordenacion
     algoritmos = ["burbuja", "mergeSort"]
     for alg in algoritmos:
-        print("--------------")
-        print("Probando el algoritmo '", alg, "' para la matriz...")
+        salida += "--------------\n"
+        salida += "Probando el algoritmo '" + alg + "' para la matriz...\n"
         ini = perf_counter()
         matrizOrdenada = ordenar(matriz, alg)
         fin = perf_counter()
-        print ("El tiempo transcurrido en segundos es de ", fin-ini)
-        print("Matriz ordenada: ")
-        print (matrizOrdenada)
-        print("--------------")
+        salida += "El tiempo transcurrido en segundos es de " + str(fin-ini) +"\n"
+        salida += "Matriz ordenada: \n"
+        salida += str(matrizOrdenada)
+        salida += "\n--------------"
+    return salida
 if __name__ == "__main__":
-    ordenarMatrices()
+    print(ordenarMatrices())
