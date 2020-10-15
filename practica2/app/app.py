@@ -43,6 +43,7 @@ def ejercicio2(matriz):
     salida += '<br><a href="' + str(matrizAleatoria)[1:-1] + '">' \
                     'Pulsa para ejecutar el programa con una matriz aleatoria' \
                 '</a>'
+    salida += '<br><a href="http://127.0.0.1:5000">Ir al inicio</a>'
     salida += "</body></html>"
     return salida
 
@@ -58,5 +59,6 @@ def ejercicio3(numeroMax):
         return salida + "<span>Es necesario un número mayor de 2</span>"
     salida += "<span>Se muestran a continuación los números primos menores a " + str(numeroMax) + " según el algoritmo de la Criba de Eratóstenes</span><br>"
     salida += obtenerPrimos(numeroMax)
+    salida += '<br><a href="http://127.0.0.1:5000">Ir al inicio</a>'
     salida += "</body></html>"
     return salida
