@@ -4,7 +4,7 @@ from app.ejp1.ordenacionMatrices import ordenarMatrices
 from app.ejp1.cribaEratostenes import obtenerPrimos
 from app.ejp1.fibonacciFichero import fibonacci
 from app.ejp1.cadenasCorchetes import checkBalanceados
-from app.ejp1.expresionesRegulares import *
+from app.ejp1.expresionesRegulares import ejercicio as expresionesRegulares
 import random
 
 app = Flask(__name__)
@@ -21,8 +21,9 @@ def hello_world():
              "<ul>" \
                 "<li><a href='ejercicio2/1,6,7,9,4,3,2,8,5,1'>Ejercicio 2: Ordenación de matrices</a>" \
                 "<li><a href='ejercicio3/50'>Ejercicio 3: Criba de Eratóstenes (50)</a>" \
-                "<li><a href='ejercicio4/50'>Ejercicio 4: Sucesión de Fibonacci (15)</a>" \
+                "<li><a href='ejercicio4/15'>Ejercicio 4: Sucesión de Fibonacci (15)</a>" \
                 "<li><a href='ejercicio5'>Ejercicio 5: Comprobación de cadena de corchetes balanceada</a>" \
+                "<li><a href='ejercicio6'>Ejercicio 6: Expresiones regulares</a>" \
              "</ul></body></html>"
     return salida
 
@@ -88,4 +89,15 @@ def ejercicio5():
     salida += "</body></html>"
     return salida
 
+
+@app.route('/ejercicio6/')
+def ejercicio6():
+    salida = generarCabeceras("Ejercicio 6")
+    salida += "<span>Se realizan las siguientes comprobaciones en base a expresiones regulares:</span><br>"
+    salida += "-------------------<br>"
+    salida += expresionesRegulares()
+    salida += '<br><a href="http://127.0.0.1:5000">Ir al inicio</a>'
+    salida += "</body></html>"
+    salida = salida.replace("\n", "<br>")
+    return salida
 
