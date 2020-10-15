@@ -3,7 +3,7 @@ from app.ejp1.adivinaElNumero import *
 from app.ejp1.ordenacionMatrices import ordenarMatrices
 from app.ejp1.cribaEratostenes import obtenerPrimos
 from app.ejp1.fibonacciFichero import fibonacci
-from app.ejp1.cadenasCorchetes import *
+from app.ejp1.cadenasCorchetes import checkBalanceados
 from app.ejp1.expresionesRegulares import *
 import random
 
@@ -22,6 +22,7 @@ def hello_world():
                 "<li><a href='ejercicio2/1,6,7,9,4,3,2,8,5,1'>Ejercicio 2: Ordenación de matrices</a>" \
                 "<li><a href='ejercicio3/50'>Ejercicio 3: Criba de Eratóstenes (50)</a>" \
                 "<li><a href='ejercicio4/50'>Ejercicio 4: Sucesión de Fibonacci (15)</a>" \
+                "<li><a href='ejercicio5'>Ejercicio 5: Comprobación de cadena de corchetes balanceada</a>" \
              "</ul></body></html>"
     return salida
 
@@ -76,3 +77,15 @@ def ejercicio4(numero):
     salida += '<br><a href="http://127.0.0.1:5000">Ir al inicio</a>'
     salida += "</body></html>"
     return salida
+
+@app.route('/ejercicio5/')
+def ejercicio5():
+    salida = generarCabeceras("Ejercicio 5")
+    salida += "<span>Se generará aleatoriamente una cadena de corchetes y se mostrará a continuación:</span><br>"
+    salida += checkBalanceados()
+    salida += '<br><a href="http://127.0.0.1:5000/ejercicio5/">Generar una nueva cadena</a>'
+    salida += '<br><a href="http://127.0.0.1:5000">Ir al inicio</a>'
+    salida += "</body></html>"
+    return salida
+
+
