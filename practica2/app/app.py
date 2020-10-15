@@ -1,11 +1,10 @@
 from flask import Flask
-from app.ejP1 import adivinaElNumero as ej1p1
-from app.ejP1 import ordenacionMatrices as ej2p1
-from app.ejP1 import cribaEratostenes as ej3p1
-from app.ejP1 import fibonacciFichero as ej4p1
-from app.ejP1 import cadenasCorchetes as ej5p1
-from app.ejP1 import expresionesRegulares as ej6p1
-
+from app.ejp1.adivinaElNumero import *
+from app.ejp1.ordenacionMatrices import *
+from app.ejp1.cribaEratostenes import *
+from app.ejp1.fibonacciFichero import *
+from app.ejp1.cadenasCorchetes import *
+from app.ejp1.expresionesRegulares import *
 app = Flask(__name__)
 
 @app.route('/')
