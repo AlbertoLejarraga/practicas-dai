@@ -2,7 +2,7 @@ from flask import Flask
 from app.ejp1.adivinaElNumero import *
 from app.ejp1.ordenacionMatrices import ordenarMatrices
 from app.ejp1.cribaEratostenes import obtenerPrimos
-from app.ejp1.fibonacciFichero import *
+from app.ejp1.fibonacciFichero import fibonacci
 from app.ejp1.cadenasCorchetes import *
 from app.ejp1.expresionesRegulares import *
 import random
@@ -21,6 +21,7 @@ def hello_world():
              "<ul>" \
                 "<li><a href='ejercicio2/1,6,7,9,4,3,2,8,5,1'>Ejercicio 2: Ordenación de matrices</a>" \
                 "<li><a href='ejercicio3/50'>Ejercicio 3: Criba de Eratóstenes (50)</a>" \
+                "<li><a href='ejercicio4/50'>Ejercicio 4: Sucesión de Fibonacci (15)</a>" \
              "</ul></body></html>"
     return salida
 
@@ -59,6 +60,19 @@ def ejercicio3(numeroMax):
         return salida + "<span>Es necesario un número mayor de 2</span>"
     salida += "<span>Se muestran a continuación los números primos menores a " + str(numeroMax) + " según el algoritmo de la Criba de Eratóstenes</span><br>"
     salida += obtenerPrimos(numeroMax)
+    salida += '<br><a href="http://127.0.0.1:5000">Ir al inicio</a>'
+    salida += "</body></html>"
+    return salida
+
+@app.route('/ejercicio4/<int:numero>')
+def ejercicio4(numero):
+    salida = generarCabeceras("Ejercicio 4")
+    #La comprobación se hace en el propio programa fibonacci, ya que se leía el dato de manera distinta
+    numeroPos, serie = fibonacci(numero)
+    salida += "<span>El número que aparece en la posición " + str(numero) + " de la sucesión de Fibonacci es "
+    salida += str(numeroPos) + ".</span><br>"
+    salida += "<span>Esta es la sucesión completa:</span><br>"
+    salida += str(serie)
     salida += '<br><a href="http://127.0.0.1:5000">Ir al inicio</a>'
     salida += "</body></html>"
     return salida
