@@ -1,5 +1,4 @@
 from flask import Flask
-from app.ejp1.adivinaElNumero import *
 from app.ejp1.ordenacionMatrices import ordenarMatrices
 from app.ejp1.cribaEratostenes import obtenerPrimos
 from app.ejp1.fibonacciFichero import fibonacci
@@ -17,7 +16,7 @@ def generarCabeceras(titulo):
 @app.route('/')
 def hello_world():
     salida = generarCabeceras("Inicio")
-    salida = "<h1>Página principal para la práctica 2 de DAI 2020</h1>" \
+    salida += "<h1>Página principal para la práctica 2 de DAI 2020</h1>" \
              "<ul>" \
                 "<li><a href='ejercicio2/1,6,7,9,4,3,2,8,5,1'>Ejercicio 2: Ordenación de matrices</a>" \
                 "<li><a href='ejercicio3/50'>Ejercicio 3: Criba de Eratóstenes (50)</a>" \
@@ -46,7 +45,7 @@ def ejercicio2(matriz):
     salida += '<br><a href="' + str(matrizAleatoria)[1:-1] + '">' \
                     'Pulsa para ejecutar el programa con una matriz aleatoria' \
                 '</a>'
-    salida += '<br><a href="http://127.0.0.1:5000">Ir al inicio</a>'
+    salida += '<br><a href="../">Ir al inicio</a>'
     salida += "</body></html>"
     return salida
 
@@ -62,7 +61,7 @@ def ejercicio3(numeroMax):
         return salida + "<span>Es necesario un número mayor de 2</span>"
     salida += "<span>Se muestran a continuación los números primos menores a " + str(numeroMax) + " según el algoritmo de la Criba de Eratóstenes</span><br>"
     salida += obtenerPrimos(numeroMax)
-    salida += '<br><a href="http://127.0.0.1:5000">Ir al inicio</a>'
+    salida += '<br><a href="../">Ir al inicio</a>'
     salida += "</body></html>"
     return salida
 
@@ -75,7 +74,7 @@ def ejercicio4(numero):
     salida += str(numeroPos) + ".</span><br>"
     salida += "<span>Esta es la sucesión completa:</span><br>"
     salida += str(serie)
-    salida += '<br><a href="http://127.0.0.1:5000">Ir al inicio</a>'
+    salida += '<br><a href="../">Ir al inicio</a>'
     salida += "</body></html>"
     return salida
 
@@ -84,8 +83,8 @@ def ejercicio5():
     salida = generarCabeceras("Ejercicio 5")
     salida += "<span>Se generará aleatoriamente una cadena de corchetes y se mostrará a continuación:</span><br>"
     salida += checkBalanceados()
-    salida += '<br><a href="http://127.0.0.1:5000/ejercicio5/">Generar una nueva cadena</a>'
-    salida += '<br><a href="http://127.0.0.1:5000">Ir al inicio</a>'
+    salida += '<br><a href="../ejercicio5/">Generar una nueva cadena</a>'
+    salida += '<br><a href="../">Ir al inicio</a>'
     salida += "</body></html>"
     return salida
 
@@ -96,7 +95,7 @@ def ejercicio6():
     salida += "<span>Se realizan las siguientes comprobaciones en base a expresiones regulares:</span><br>"
     salida += "-------------------<br>"
     salida += expresionesRegulares()
-    salida += '<br><a href="http://127.0.0.1:5000">Ir al inicio</a>'
+    salida += '<br><a href="../">Ir al inicio</a>'
     salida += "</body></html>"
     salida = salida.replace("\n", "<br>")
     return salida
