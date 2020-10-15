@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, url_for
 from app.ejp1.ordenacionMatrices import ordenarMatrices
 from app.ejp1.cribaEratostenes import obtenerPrimos
 from app.ejp1.fibonacciFichero import fibonacci
@@ -14,15 +14,15 @@ def generarCabeceras(titulo):
              "</head>" \
              "<body>"
 @app.route('/')
-def hello_world():
+def index():
     salida = generarCabeceras("Inicio")
     salida += "<h1>Página principal para la práctica 2 de DAI 2020</h1>" \
              "<ul>" \
-                "<li><a href='ejercicio2/1,6,7,9,4,3,2,8,5,1'>Ejercicio 2: Ordenación de matrices</a>" \
-                "<li><a href='ejercicio3/50'>Ejercicio 3: Criba de Eratóstenes (50)</a>" \
-                "<li><a href='ejercicio4/15'>Ejercicio 4: Sucesión de Fibonacci (15)</a>" \
-                "<li><a href='ejercicio5'>Ejercicio 5: Comprobación de cadena de corchetes balanceada</a>" \
-                "<li><a href='ejercicio6'>Ejercicio 6: Expresiones regulares</a>" \
+                "<li><a href='" + url_for("ejercicio2", matriz="1,6,7,9,4,3,2,8,5,1") + "'>Ejercicio 2: Ordenación de matrices</a>" \
+                "<li><a href='" + url_for("ejercicio3", numeroMax=50) + "'>Ejercicio 3: Criba de Eratóstenes (50)</a>" \
+                "<li><a href='" + url_for("ejercicio4", numero=15) + "'>Ejercicio 4: Sucesión de Fibonacci (15)</a>" \
+                "<li><a href='" + url_for("ejercicio5") + "'>Ejercicio 5: Comprobación de cadena de corchetes balanceada</a>" \
+                "<li><a href='" + url_for("ejercicio6") + "'>Ejercicio 6: Expresiones regulares</a>" \
              "</ul></body></html>"
     return salida
 
@@ -42,10 +42,10 @@ def ejercicio2(matriz):
     salida = salida.replace("\n", "<br>")
     #se da la opción de lanzar el programa con una matriz aleatoria
     matrizAleatoria = [random.randint(-50,50) for i in range(random.randint(2,200))]
-    salida += '<br><a href="' + str(matrizAleatoria)[1:-1] + '">' \
+    salida += '<br><a href="' + url_for("ejercicio2", matriz=str(matrizAleatoria)[1:-1]) + '">' \
                     'Pulsa para ejecutar el programa con una matriz aleatoria' \
                 '</a>'
-    salida += '<br><a href="../">Ir al inicio</a>'
+    salida += '<br><a href=' + url_for("index") + '>Ir al inicio</a>'
     salida += "</body></html>"
     return salida
 
@@ -61,7 +61,7 @@ def ejercicio3(numeroMax):
         return salida + "<span>Es necesario un número mayor de 2</span>"
     salida += "<span>Se muestran a continuación los números primos menores a " + str(numeroMax) + " según el algoritmo de la Criba de Eratóstenes</span><br>"
     salida += obtenerPrimos(numeroMax)
-    salida += '<br><a href="../">Ir al inicio</a>'
+    salida += '<br><a href=' + url_for("index") + '>Ir al inicio</a>'
     salida += "</body></html>"
     return salida
 
@@ -74,7 +74,7 @@ def ejercicio4(numero):
     salida += str(numeroPos) + ".</span><br>"
     salida += "<span>Esta es la sucesión completa:</span><br>"
     salida += str(serie)
-    salida += '<br><a href="../">Ir al inicio</a>'
+    salida += '<br><a href=' + url_for("index") + '>Ir al inicio</a>'
     salida += "</body></html>"
     return salida
 
@@ -83,8 +83,8 @@ def ejercicio5():
     salida = generarCabeceras("Ejercicio 5")
     salida += "<span>Se generará aleatoriamente una cadena de corchetes y se mostrará a continuación:</span><br>"
     salida += checkBalanceados()
-    salida += '<br><a href="../ejercicio5/">Generar una nueva cadena</a>'
-    salida += '<br><a href="../">Ir al inicio</a>'
+    salida += '<br><a href=' + url_for("ejercicio5") + '>Generar una nueva cadena</a>'
+    salida += '<br><a href=' + url_for("index") + '>Ir al inicio</a>'
     salida += "</body></html>"
     return salida
 
@@ -95,7 +95,7 @@ def ejercicio6():
     salida += "<span>Se realizan las siguientes comprobaciones en base a expresiones regulares:</span><br>"
     salida += "-------------------<br>"
     salida += expresionesRegulares()
-    salida += '<br><a href="../">Ir al inicio</a>'
+    salida += '<br><a href=' + url_for("index") + '>Ir al inicio</a>'
     salida += "</body></html>"
     salida = salida.replace("\n", "<br>")
     return salida
