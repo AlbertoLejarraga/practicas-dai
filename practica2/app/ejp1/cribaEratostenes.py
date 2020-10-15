@@ -1,10 +1,11 @@
 import sys
 
 
-def obtenerPrimos():
+def obtenerPrimos(numeroMax=None):
     '''Función que aplica la criba de aristotenes para obtener los primos menores a un numero'''
-    #se obtiene el número por parte del usuario y se genera la lista de numeros original
-    numeroMax = int(input("Introduce el número máximo"))
+    if numeroMax is None:
+        #se obtiene el número por parte del usuario y se genera la lista de numeros original
+        numeroMax = int(input("Introduce el número máximo"))
     listaNumeros = list(range(2,numeroMax+1))
     #se determina que el número actual a comprobar es el dos y que se esta ante la primera iteración
     numeroActual = 2
@@ -25,9 +26,9 @@ def obtenerPrimos():
         numeroActual = listaNumeros[i]
         i += 1
     #se muestra la lista final
-    print(listaNumeros)
+    return str(listaNumeros)
 
 
 
 if __name__ == "__main__":
-    obtenerPrimos()
+    print(obtenerPrimos())

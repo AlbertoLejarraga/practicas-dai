@@ -1,7 +1,7 @@
 from flask import Flask
 from app.ejp1.adivinaElNumero import *
 from app.ejp1.ordenacionMatrices import ordenarMatrices
-from app.ejp1.cribaEratostenes import *
+from app.ejp1.cribaEratostenes import obtenerPrimos
 from app.ejp1.fibonacciFichero import *
 from app.ejp1.cadenasCorchetes import *
 from app.ejp1.expresionesRegulares import *
@@ -20,20 +20,22 @@ def hello_world():
     salida = "<h1>Página principal para la práctica 2 de DAI 2020</h1>" \
              "<ul>" \
                 "<li><a href='ejercicio2/1,6,7,9,4,3,2,8,5,1'>Ejercicio 2: Ordenación de matrices</a>" \
+                "<li><a href='ejercicio3/50'>Ejercicio 3: Criba de Eratóstenes (50)</a>" \
              "</ul></body></html>"
     return salida
 
 @app.route('/ejercicio2/<string:matriz>')
 def ejercicio2(matriz):
     salida = generarCabeceras("Ejercicio 2")
-    salida += "<span>La matriz recibida es: \n[" + matriz + "]\n</span>"
     #Se comprueba que el formato de la matriz sea correcto, se divide por comas y cada elemento es un entero
     m = matriz.split(",")
     for num in m:
         try:
             int(num)
         except ValueError:
-            return "Matriz incorrecta"
+            return salida + "<span>Matriz incorrecta</span>"
+
+    salida += "<span>La matriz recibida es: \n[" + matriz + "]\n</span>"
     salida += ordenarMatrices(m)
     salida = salida.replace("\n", "<br>")
     #se da la opción de lanzar el programa con una matriz aleatoria
@@ -44,3 +46,17 @@ def ejercicio2(matriz):
     salida += "</body></html>"
     return salida
 
+@app.route('/ejercicio3/<int:numeroMax>')
+def ejercicio3(numeroMax):
+    salida = generarCabeceras("Ejercicio 3")
+    #se comprueba que se reciba un número
+    try:
+        n = int(numeroMax)
+        if n < 2:
+            return salida + "<span>Es necesario un número mayor de 2</span>"
+    except ValueError:
+        return salida + "<span>Es necesario un número mayor de 2</span>"
+    salida += "<span>Se muestran a continuación los números primos menores a " + str(numeroMax) + " según el algoritmo de la Criba de Eratóstenes</span><br>"
+    salida += obtenerPrimos(numeroMax)
+    salida += "</body></html>"
+    return salida
