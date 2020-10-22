@@ -24,6 +24,7 @@ def index():
                 "<li><a href='" + url_for("ejercicio4", numero=15) + "'>Ejercicio 4: Sucesión de Fibonacci (15)</a>" \
                 "<li><a href='" + url_for("ejercicio5") + "'>Ejercicio 5: Comprobación de cadena de corchetes balanceada</a>" \
                 "<li><a href='" + url_for("ejercicio6") + "'>Ejercicio 6: Expresiones regulares</a>" \
+                "<li><a href='" + url_for("ejercicioParaNota") + "'>Ejercicio para nota: Figuras SVG</a>" \
              "</ul></body></html>"
     return salida
 
@@ -121,6 +122,7 @@ def ejercicioParaNota():
                     <svg width='400' height='400'>
                         {figuras[figuraSeleccionada]}
                     </svg>'''
+    salida += '<br><a href=' + url_for("ejercicioParaNota") + '>Generar una nueva figura</a>'
     salida += '<br><a href=' + url_for("index") + '>Ir al inicio</a>'
     salida += '''
                 </body>
