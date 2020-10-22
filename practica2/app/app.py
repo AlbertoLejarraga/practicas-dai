@@ -120,8 +120,9 @@ def ejercicioParaNota():
     salida += f'''  <h1>{figuraSeleccionada}</h1>
                     <svg width='400' height='400'>
                         {figuras[figuraSeleccionada]}
-                    </svg>
-
+                    </svg>'''
+    salida += '<br><a href=' + url_for("index") + '>Ir al inicio</a>'
+    salida += '''
                 </body>
                 </html>
                 '''
