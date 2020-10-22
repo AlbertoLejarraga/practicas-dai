@@ -123,7 +123,8 @@ def ejercicioParaNota():
                     </svg>
 
                 </body>
-                </html>'''
+                </html>
+                '''
     return salida
 
 @app.errorhandler(404)
