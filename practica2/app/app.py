@@ -101,6 +101,31 @@ def ejercicio6():
     salida = salida.replace("\n", "<br>")
     return salida
 
+@app.route('/ejercicio-para-nota/')
+def ejercicioParaNota():
+    salida = generarCabeceras("Ejercicio para nota")
+    #se generan las distintas figuras posibles con valores aleatorios de tamaño, color, etc.
+    figuras={}
+    #colores para el Relleno y el Borde
+    r = [random.randint(0,255) for i in range(3)]
+    b = [random.randint(0,255) for i in range(3)]
+    #estilo con valores aleatorios de color y bordes
+    estilo = f'fill:rgb({r[0]},{r[1]},{r[2]});stroke-width:{random.randint(0,20)};stroke:rgb({b[0]},{b[1]},{b[2]})'
+    figuras["Rectángulo"]= f"<rect x='20', y='20', width='{random.randint(20,80)}%' height='{random.randint(2,80)}' style='{estilo}'/>"
+    figuras["Círculo"] = f"<circle cx='200' cy='200' r='{random.randint(25,190)}' style='{estilo}'/>"
+    figuras["Elipse"] = f"<ellipse cx='200' cy='200' rx='{random.randint(25,190)}' ry='{random.randint(25,190)}' style='{estilo}'/>"
+
+    #se genera el html con un marco svg general y una figura aleatoria dentro
+    figuraSeleccionada = random.choice(list(figuras.keys()))
+    salida += f'''  <h1>{figuraSeleccionada}</h1>
+                    <svg width='400' height='400'>
+                        {figuras[figuraSeleccionada]}
+                    </svg>
+
+                </body>
+                </html>'''
+    return salida
+
 @app.errorhandler(404)
 def page_not_found(e):
     return render_template("404.html"), 404
