@@ -22,13 +22,15 @@ def comprobarCadena(cadena):
 def checkBalanceados(cadena=None):
     '''Función que genera una cadena de corchetes aleatoria y comprueba si está balanceada'''
     longitud = random.randint(2, 12)
-    cadena = ""
-    #se genera la cadena aleatoria
-    for i in range(longitud):
-        if random.randint(0,1) == 0:
-            cadena += "["
-        else:
-            cadena += "]"
+    if cadena is None:
+        cadena = ""
+        #se genera la cadena aleatoria
+        for i in range(longitud):
+            if random.randint(0,1) == 0:
+                cadena += "["
+            else:
+                cadena += "]"
+
     return cadena + " ==> " + str(comprobarCadena(cadena))
 
 if __name__ == "__main__":
