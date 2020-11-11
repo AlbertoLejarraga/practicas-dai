@@ -1,16 +1,32 @@
-from flask import Flask, render_template, flash, session
+from flask import Flask, render_template, flash, session, request, redirect, url_for
 import random
+import hashlib
 from app.controller.practica1.ordenacionMatrices import ordenarMatrices
 from app.controller.practica1.cribaEratostenes import obtenerPrimos
 from app.controller.practica1.fibonacciFichero import fibonacci
 from app.controller.practica1.cadenasCorchetes import checkBalanceados
 from app.controller.practica1.expresionesRegulares import ejercicio as expresionesRegulares
+from app import model
 
 app = Flask(__name__)
 app.secret_key = "clave-secreta-shhh"
+
+
+#se llevan a cabo las siguientes acciones antes de cada petición
+@app.before_request
+def before_request_callback():
+    #solo interesan las llamadas get, los formularios vienen siempre por post y no se almacenan
+    if request.method == "GET":
+        print()
+
+
 @app.route('/')
 def index():
     return render_template("index.html")
+
+@app.errorhandler(404)
+def page_not_found(e):
+    return render_template("404.html"), 404
 
 @app.route('/practica1/ej1/')
 def p1Ej1():
@@ -91,7 +107,59 @@ def ejercicioParaNota():
     figuraSeleccionada = random.choice(list(figuras.keys()))
     return render_template("practica1/ejercicioParaNota.html", nombre = figuraSeleccionada, figura = figuras[figuraSeleccionada])
 
+@app.route("/registro", methods = ["POST", "GET"])
+def registro():
+    if request.method == "GET":
+        return render_template("registro.html")
+    else:
+        nombre = request.form["nombre"]
+        apellidos = request.form["apellidos"]
+        mail = request.form["mail"]
+        nick = request.form["nick"]
+        pwd = request.form["pwd"]
+        if model.existeUsuario(nick):
+            flash("El nick introducido ya existe, prueba con uno nuevo")
+            return render_template("registro.html")
+        else:
+            model.usuarioNuevo(nick, nombre, apellidos, mail, pwd)
+            flash (f"Te has registrado con el nick {nick}, ya puedes iniciar sesión")
+            return redirect(url_for("index"))
 
-@app.errorhandler(404)
-def page_not_found(e):
-    return render_template("404.html"), 404
+@app.route("/logout")
+def logout():
+    session.clear()
+    return redirect(request.referrer)
+
+@app.route("/login", methods=["POST"])
+def login():
+    nick = request.form["nick"]
+    pwd = request.form["pwd"]
+    if model.existeUsuario(nick) and model.comprobarPwd(nick, pwd):
+        session["nick"] = nick
+        return redirect(request.referrer)
+    else:
+        flash("Nombre de usuario o contraseña incorrecto")
+        return redirect(url_for("index"))
+
+@app.route("/modificarPerfil", methods = ["GET", "POST"])
+def modificarPerfil():
+    if request.method == "GET":
+        if "nick" in session:
+            return render_template("modificarPerfil.html", usuario=model.obtenerDatosUsuario(session["nick"]), nick = session["nick"])
+        else:
+            flash("Para acceder aquí debes iniciar sesión")
+            return redirect(url_for("index"))
+    else:
+        nombre = request.form["nombre"]
+        apellidos = request.form["apellidos"]
+        mail = request.form["mail"]
+        nick = request.form["nick"]
+        pwd = request.form["pwd"]
+        if not model.existeUsuario(nick):
+            return redirect(url_for("index"))
+        else:
+            model.modificarUsuario(nick, nombre, apellidos, mail)
+            if pwd != "":
+                model.modificarPwd(nick, pwd)
+            flash ("Datos modificados correctamente")
+            return redirect(url_for("index"))
