@@ -12,6 +12,10 @@ app = Flask(__name__)
 def index():
     return render_template("index.html")
 
+@app.route('/practica1/ej1')
+def p1Ej1():
+    return render_template("practica1/ejercicio1.html")
+
 @app.route('/practica1/ej2/<string:matriz>')
 def p1Ej2(matriz):
     #Se comprueba que el formato de la matriz sea correcto, se divide por comas y cada elemento es un entero
