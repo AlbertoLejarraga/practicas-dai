@@ -12,49 +12,56 @@ app = Flask(__name__)
 def index():
     return render_template("index.html")
 
-@app.route('/practica1/ej1')
+@app.route('/practica1/ej1/')
 def p1Ej1():
     return render_template("practica1/ejercicio1.html")
 
 @app.route('/practica1/ej2/<string:matriz>')
-def p1Ej2(matriz):
+@app.route('/practica1/ej2/')
+def p1Ej2(matriz=None):
     #Se comprueba que el formato de la matriz sea correcto, se divide por comas y cada elemento es un entero
-    if matriz == "random":
+    if matriz is None:
         matrizAOrdenar = [random.randint(-50,50) for i in range(random.randint(2,200))]
     else:
-        matrizAOrdenar = matriz.split(",")
-        for num in matrizAOrdenar:
-            try:
-                int(num)
-            except ValueError:
-                return render_template("error.html", error = "La matriz introducida es incorrecta")
+        try:
+            matrizAOrdenar = [int(i) for i in matriz.split(",")]
+        except ValueError:
+            return render_template("error.html", error = "La matriz introducida es incorrecta")
     resultado = ordenarMatrices(matrizAOrdenar)
-    return render_template("practica1/ejercicio2.html", matrizAOrdenar = str(matrizAOrdenar), resul = resultado)
+    return render_template("practica1/ejercicio2.html", matrizAOrdenar = matrizAOrdenar, resul = resultado)
 
 @app.route('/practica1/ej3/<int:numeroMax>')
-def ejercicio3(numeroMax):
-    #se comprueba que se reciba un número
-    try:
-        n = int(numeroMax)
-        if n < 2:
+@app.route('/practica1/ej3/')
+def ejercicio3(numeroMax=None):
+    if numeroMax is None:
+        n = random.randint(2,30)
+    else:
+        #se comprueba que se reciba un número
+        try:
+            n = int(numeroMax)
+            if n < 2:
+                return render_template("error.html", error = "Debe introducir un número mayor que 2")
+        except ValueError:
             return render_template("error.html", error = "Debe introducir un número mayor que 2")
-    except ValueError:
-        return render_template("error.html", error = "Debe introducir un número mayor que 2")
-    return render_template("practica1/ejercicio3.html", numero=numeroMax, resul=obtenerPrimos(numeroMax))
+    return render_template("practica1/ejercicio3.html", numero=n, resul=obtenerPrimos(n))
 
 @app.route('/practica1/ej4/<int:numero>')
-def ejercicio4(numero):
-    #se comprueba que lo introducido sea un número
-    try:
-        n = int(numero)
-        if n<=1:
+@app.route('/practica1/ej4/')
+def ejercicio4(numero = None):
+    if numero is None:
+        numero = random.randint(1,30)
+    else:
+        #se comprueba que lo introducido sea un número
+        try:
+            n = int(numero)
+            if n<=1:
+                return render_template("error.html", error="Compruebe que lo introducido sea realmente un número mayor que 1")
+        except ValueError:
             return render_template("error.html", error="Compruebe que lo introducido sea realmente un número mayor que 1")
-    except ValueError:
-        return render_template("error.html", error="Compruebe que lo introducido sea realmente un número mayor que 1")
     numeroPos, serie = fibonacci(numero)
     return render_template("practica1/ejercicio4.html", posicion = numero, numeroPos = numeroPos, serie = serie)
 
-@app.route('/practica1/ej5')
+@app.route('/practica1/ej5/')
 @app.route('/practica1/ej5/<string:cadena>')
 def ejercicio5(cadena=None):
     if cadena is not None:
