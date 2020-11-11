@@ -21,9 +21,9 @@
                 <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Práctica 1</a>
                 <ul class="dropdown-menu">
                   <li><a class="dropdown-item" href="/practica1/ej1">Ejercicio 1: Adivina el número</a></li>
-                  <li><a class="dropdown-item" href="/practica1/ej2/random">Ejercicio 2: Ordenación de matrices</a></li>
-                  <li><a class="dropdown-item" href="/practica1/ej3/50">Ejercicio 3: Criba de Eratóstenes</a></li>
-                  <li><a class="dropdown-item" href="/practica1/ej4/25">Ejercicio 4: Sucesión de Fibonacci</a></li>
+                  <li><a class="dropdown-item" href="/practica1/ej2">Ejercicio 2: Ordenación de matrices</a></li>
+                  <li><a class="dropdown-item" href="/practica1/ej3">Ejercicio 3: Criba de Eratóstenes</a></li>
+                  <li><a class="dropdown-item" href="/practica1/ej4">Ejercicio 4: Sucesión de Fibonacci</a></li>
                   <li><a class="dropdown-item" href="/practica1/ej5">Ejercicio 5: Comprobación de cadena de corchetes balanceada</a></li>
                   <li><a class="dropdown-item" href="/practica1/ej6">Ejercicio 6: Expresiones regulares</a></li>
                   <li><a class="dropdown-item" href="/practica1/ejParaNota">Ejercicio para nota: Figuras SVG</a></li>
@@ -63,6 +63,7 @@
       </nav>
     </header>
     <body>
+
       <div class="container mt-2 mb-4">
         <div class="row">
           <div class="col-sm-2 bg-light">
@@ -82,6 +83,13 @@
             </ul>
           </div>
           <div class="col-sm-10">
+            {% with messages = get_flashed_messages() %}
+              {%if messages %}
+                {% for msg in messages %}
+                  <p class = "bg-info">{{msg}}</p>
+                {% endfor %}
+              {% endif %}
+            {% endwith %}
             {% block contenido %}
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec imperdiet metus sit amet nisl sagittis commodo. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. In hendrerit consectetur mi vel rhoncus. Nulla facilisi. Mauris commodo dignissim tempus. Phasellus sit amet nunc malesuada massa consequat luctus. Suspendisse in massa scelerisque, sagittis tortor vel, molestie mauris. Sed semper ligula id metus rhoncus feugiat. Nulla a tellus ex. Nullam rutrum aliquam tellus vel tincidunt.
             <br>

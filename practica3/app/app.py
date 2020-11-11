@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, flash, session
 import random
 from app.controller.practica1.ordenacionMatrices import ordenarMatrices
 from app.controller.practica1.cribaEratostenes import obtenerPrimos
@@ -7,7 +7,7 @@ from app.controller.practica1.cadenasCorchetes import checkBalanceados
 from app.controller.practica1.expresionesRegulares import ejercicio as expresionesRegulares
 
 app = Flask(__name__)
-
+app.secret_key = "clave-secreta-shhh"
 @app.route('/')
 def index():
     return render_template("index.html")
