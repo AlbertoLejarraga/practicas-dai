@@ -10,7 +10,7 @@
   <br>
   <span id="intentos"></span>
   <br>
-  <form>
+  <form onsubmit="document.getElementById('botonProbar').click();return false;">
     <div class="form-group">
       <label for="numIntro">Número:</label>
       <input type="number" min="1" max="100" id="numIntro">
@@ -25,12 +25,12 @@
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Jugando...</h5>
+          <h5 class="modal-title">Jugando...</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
-        <div class="modal-body align-self-center" id="cuerpoModal">
+        <div class="modal-body align-self-center text-center" id="cuerpoModal">
 
         </div>
         <div class="modal-footer" id="divBotonModal">
@@ -39,6 +39,6 @@
       </div>
     </div>
   </div>
-  <div><a href="/practica1/ej1">Volver a empezar</a></div>
+  <span><a href="/practica1/ej1">Volver a empezar</a></span>
 
 {%endblock%}

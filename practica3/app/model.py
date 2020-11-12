@@ -19,3 +19,11 @@ def modificarUsuario(nick, nombre, apellidos, mail):
 def modificarPwd(nick, pwd):
     db[nick]["pwd"] =  hashlib.sha256(pwd.encode('utf-8')).hexdigest()
     db[nick] = db[nick]
+def modificarListaVisitadas(nick, lista):
+    db[nick]["listaVisitadas"] = lista[:5]
+    db[nick] = db[nick]
+def obtenerListaWebsUsuario(nick):
+    if "listaVisitadas" in db[nick]:
+        return db[nick]["listaVisitadas"]
+    else:
+        return []

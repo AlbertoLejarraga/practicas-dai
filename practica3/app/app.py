@@ -10,15 +10,37 @@ from app import model
 
 app = Flask(__name__)
 app.secret_key = "clave-secreta-shhh"
-
+#diccionario para almacenar los titulos de las webs
+diccURLS = {"/practica1/ej1" : "Ejercicio 1: Adivina el número",
+            "/practica1/ej2" : "Ejercicio 2: Ordenación de matrices",
+            "/practica1/ej3" : "Ejercicio 3: Criba de Eratóstenes",
+            "/practica1/ej4" : "Ejercicio 4: Sucesión de Fibonacci",
+            "/practica1/ej5" : "Ejercicio 5: Cadenas de corchetes",
+            "/practica1/ej6" : "Ejercicio 6: Expresiones regulares",
+            "/practica1/ejParaNota" : "Ejercicio para nota: Figuras SVG",
+            "/modificarPerfil" : "Modificar perfil de usuario",
+            "/" : "Inicio"}
 
 #se llevan a cabo las siguientes acciones antes de cada petición
 @app.before_request
 def before_request_callback():
-    #solo interesan las llamadas get, los formularios vienen siempre por post y no se almacenan
-    if request.method == "GET":
-        print()
-
+    #solo interesan las llamadas get para almacenar las web visitadas, los formularios vienen siempre por post y no se almacenan
+    if request.method == "GET" and "static" not in request.url:#se excluyen las llamadas al directorio static (img, css y js)
+        #se detecta cual es el titulo de la página solicitada segun el dicc diccURLS
+        for k,v in diccURLS.items():
+            if k in request.url:#si se encuentra en el diccionario se crea la variable titulo y se sale
+                tituloWeb = v
+                break
+        if  "listaWebs" not in session:#si es la primera página visitada
+            session["listaWebs"] = [[request.url, tituloWeb]]
+        else:#se comprueba si no está introducida en la lista, en cuyo caso se añade la primera
+            for i, par in enumerate(session["listaWebs"]):
+                if par[1] == tituloWeb:#si se encuentra, se saca y se mete la primera
+                    session["listaWebs"].pop(i)
+            session["listaWebs"] = [[request.url, tituloWeb]] + session["listaWebs"][:4]
+        #si el usuario esta logado, se modifica en la base de datos la lista de webs del usuario
+        if "nick" in session:
+            model.modificarListaVisitadas(session["nick"], session["listaWebs"])
 
 @app.route('/')
 def index():
@@ -127,7 +149,7 @@ def registro():
 
 @app.route("/logout")
 def logout():
-    session.clear()
+    session.pop("nick", None)
     return redirect(request.referrer)
 
 @app.route("/login", methods=["POST"])
