@@ -1,8 +1,11 @@
 # practicas-dai
 Repositorio para publicar las prácticas de la asignatura DAI 2020
 ## Practica 1: Python y entorno de trabajo con docker
-* [Enunciado](https://swad.ugr.es/swad/tmp/FG/Ji6jPuQ2lQJyzwufLKlDjX64FIv9pYQFbsMS77_MU/DAI%20Practica%201%20-%20Python%20y%20entorno%20de%20trabajo.html)
+* [Enunciado](https://swad.ugr.es/swad/tmp/K9/O5ldCYWcpcfgYHoh75zdQ9191cerxFLaV4sq2eGgg/DAI%20Practica%201%20-%20Python%20y%20entorno%20de%20trabajo.html)
 * [Resolución](https://github.com/AlbertoLejarraga/practicas-dai/tree/main/practica1)
 ## Practica 2: Microframework Flask
-* [Enunciado](https://swad.ugr.es/swad/tmp/kn/-sIt0v1c2ihRhP8jKUW-HwPcyZnmDxweDFfsakGyg/DAI%20Practica%202%20-%20Microframework%20Flask.html)
+* [Enunciado](https://swad.ugr.es/swad/tmp/Gf/fmmDsN9y28P8WyLGmIxQnTW_2F-pjHbC-hmGkqvSg/DAI%20Practica%202%20-%20Microframework%20Flask.html)
 * [Resolución](https://github.com/AlbertoLejarraga/practicas-dai/tree/main/practica2)
+## Practica 3: Plantillas, Manejo de Sesiones y Frameworks CSS
+* [Enunciado](https://swad.ugr.es/swad/tmp/S_/uxuaKlP4x4oa-fqhAdJq6Pf4XRM37XBVPYPj1A2yQ/DAI%20Practica%203%20-%20Plantillas_%20Sesiones_%20Frameworks%20CSS.html)
+* [Resolución](https://github.com/AlbertoLejarraga/practicas-dai/tree/main/practica3)
