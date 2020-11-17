@@ -1,0 +1,16 @@
+{% extends "./base.html" %}
+{% block title %} Ejercicio 4: Sucesión de Fibonacci {%endblock%}
+{% block contenido%}
+  <div>
+    <span>El número que aparece en la posición {{posicion}} de la sucesión de Fibonacci es el {{numeroPos}}.</span>
+    <br>
+    <span>Esta es la sucesión completa:</span>
+    <br>
+    <span>{{serie}}</span>
+  </div>
+  <br>
+  <div>
+    Haga click <a href="/practica1/ej4">aquí</a> para obtener la sucesión de Fibonacci hasta una posición aleatoria.<br>
+    También puede elegir este número introduciéndolo en la barra de direcciones (por ejemplo, ~/practica1/ej4/25)
+  </div>
+{%endblock%}
