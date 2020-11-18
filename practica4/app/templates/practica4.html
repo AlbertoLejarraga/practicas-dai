@@ -1,0 +1,178 @@
+{% extends "./base.html" %}
+{% block scripts %}
+  <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+  <script src="http://code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
+  <script type="text/javascript" src="/static/js/juegoAdivinar.js"></script>
+{% endblock %}
+{% block title %} Practica 4: Pokemon GO{%endblock%}
+{% block colIzquierda %}
+      <ul class="nav flex-column">
+        <li class="nav-item"><h4 class="nav-link">Filtros</h4></li>
+        <form action="/practica4" method="get" name="formPractica4" id="formPractica4">
+          <li class = "nav-item">
+            <div class="form-group">
+              <label for="nombre">Nombre:</label><br>
+              <input type="text" name="nombre" id="nombre">
+            </div>
+          </li>
+          <li class = "nav-item">
+            <div class="form-group">
+              <label for="tipo">Tipo:</label><br>
+              <select name="tipo" id="tipo" class="w-75">
+                <option value="" selected>-</option>
+                <option value="Water">Agua</option>
+                <option value="Normal">Normal</option>
+                <option value="Flying">Volador</option>
+                <option value="Poison">Venenoso</option>
+                <option value="Psychic">Psíquico</option>
+                <option value="Grass">Hierba</option>
+                <option value="Ground">Tierra</option>
+                <option value="Rock">Roca</option>
+                <option value="Fighting">Lucha</option>
+                <option value="Bug">Insecto</option>
+                <option value="Fire">Fuego</option>
+                <option value="Electric">Eléctrico</option>
+                <option value="Ghost">Fantasma</option>
+                <option value="Dragon">Dragón</option>
+                <option value="Ice">Hielo</option>
+              </select>
+            </div>
+          </li>
+          <!--<li class = "nav-item">
+            <div class="form-group">
+              <label for="alturaMin">Altura mínima (m):</label><br>
+              <input type="number" id="alturaMin" step="0.1" class="w-75">
+            </div>
+          </li>
+          <li class = "nav-item">
+            <div class="form-group">
+              <label for="alturaMax">Altura máxima (m):</label><br>
+              <input type="number" id="alturaMax" step="0.1" class="w-75">
+            </div>
+          </li>
+          <li class = "nav-item">
+            <div class="form-group">
+              <label for="pesoMin">Peso mínimo (kg):</label><br>
+              <input type="number" id="pesoMin" step="0.1" class="w-75">
+            </div>
+          </li>
+          <li class = "nav-item">
+            <div class="form-group">
+              <label for="pesoMax">Peso máximo (kg):</label><br>
+              <input type="number" id="pesoMax" step="0.1" class="w-75">
+            </div>
+          </li>-->
+          <li class = "nav-item">
+            <div class="form-group">
+              <label for="tipoHuevo">Tipo de huevo:</label><br>
+              <select name="tipoHuevo" id="tipoHuevo" class="w-75">
+                <option value="" selected>-</option>
+                <option value="2 km">2 km</option>
+                <option value="5 km">5 km</option>
+                <option value="10 km">10 km</option>
+                <option value="Not in Eggs">Sin huevos</option>
+              </select>
+            </div>
+          </li>
+          <li class = "nav-item">
+            <div class="form-group">
+              <label for="evolucion">Evolución:</label><br>
+              <select name="evolucion" id="evolucion" class="w-75">
+                <option value="" selected>-</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+              </select>
+            </div>
+          </li>
+          <li class = "nav-item">
+            <div class="form-group">
+              <input type="submit" value="Buscar">
+            </div>
+          </li>
+      </ul>
+      <script>
+        {%if filtros["tipo"]%}
+          var filtroTipo = '{{ filtros["tipo"] | safe }}';
+          document.getElementById("tipo").value = filtroTipo;
+        {% endif %}
+        {%if filtros["tipoHuevo"]%}
+          var filtroTipoHuevo = '{{ filtros["tipoHuevo"]|safe }}';
+          document.getElementById("tipoHuevo").value = filtroTipoHuevo;
+        {% endif %}
+        {%if filtros["evolucion"]%}
+          var filtroEvol = '{{ filtros["evolucion"]|safe }}';
+          document.getElementById("evolucion").value = filtroEvol;
+        {% endif %}
+        {%if filtros["nombre"]%}
+          var filtroNombre = '{{ filtros["nombre"]|safe }}';
+          document.getElementById("nombre").value = filtroNombre;
+        {% endif %}
+      </script>
+{% endblock %}
+{% block contenido %}
+  <div class="container row text-center">
+    {% if datos is not defined%}
+    <span>Parece que no hay pokemons por aquí...</span>
+    {% else %}
+      {% for pokemon in datos %}
+
+        <div class="card bg-light mb-1 mr-1" style="width: 12rem;">
+          <h5 class="card-title text-center">{{pokemon.num}}-{{pokemon.name}}</h5>
+          <img class="card-img" src="{{pokemon.img}}" alt="{{pokemon.name}}" style="margin:-30px 0">
+          <div class="card-body">
+            <div class="collapse-content">
+              <p class="card-text collapse  text-left" id="contenido-{{pokemon.num}}">
+                <b>Tipo:</b> {% for tipo in pokemon.type %}
+                                {{tipo}}{% if not loop.last %},{% endif %}
+                              {% endfor %}
+                <br>
+                <b>Altura:</b> {{pokemon.height}}<br>
+                <b>Peso:</b> {{pokemon.weight}}<br>
+                <b>Huevo:</b> {{pokemon.egg}}<br>
+                <b>Probabilidad de aparición:</b> {{pokemon.spawn_chance}}<br>
+                <b>Hora de aparición:</b> {{pokemon.spawn_time}}<br>
+                <b>Debilidades:</b> {% for weakness in pokemon.weaknesses %}
+                                      {{weakness}}{% if not loop.last %},{% endif %}
+                              {% endfor %}<br>
+                <b>Evolución:</b> {{pokemon.evolucion}}<br>
+                {% if pokemon.prev_evolution %}
+                  <b>Evolucionado de:</b>
+                  {% for evolucion in pokemon.prev_evolution %}
+                    <a href="#contenido-{{evolucion.num}}" data-toggle="collapse">{{evolucion.name}}</a>
+                    {% if not loop.last %},{% endif %}
+                  {% endfor %}<br>
+                {% endif %}
+                 {% if pokemon.next_evolution %}
+                   <b>Evoluciona a:</b>
+                   {% for evolucion in pokemon.next_evolution %}
+                     <a href="#contenido-{{evolucion.num}}" data-toggle="collapse">{{evolucion.name}}</a>
+                     {% if not loop.last %},{% endif %}
+                   {% endfor %}<br>
+                 {% endif %}
+              </p>
+              <a class="btn  p-1 my-1 mr-0 mml-1 collapsed" data-toggle="collapse" href="#contenido-{{pokemon.num}}" aria-expanded="false" aria-controls="collapseContent"><i class="fas fa-info-circle"></i></a>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    {% endif %}
+  </div>
+  <div class="text-center">
+    {% if "?" in url %}<!--La diferencia es el ?pagina o &pagina-->
+      {% if pagina > 0 %}
+        <a href="{{url}}&pagina={{pagina - 1}}">Página anterior<i class="fas fa-arrow-left"></i></a> |
+      {% endif %}
+      <a href="{{url}}&pagina={{pagina + 1}}"><i class="fas fa-arrow-right"></i>Página siguiente</a>
+    {% else %}
+      {% if pagina > 0 %}
+        <a href="{{url}}?pagina={{pagina - 1}}">Página anterior<i class="fas fa-arrow-left"></i></a> |
+      {% endif %}
+      <a href="{{url}}?pagina={{pagina + 1}}"><i class="fas fa-arrow-right"></i>Página siguiente</a>
+    {% endif %}
+
+
+  </div>
+
+
+{%endblock%}

@@ -19,6 +19,7 @@ diccURLS = {"/practica1/ej1" : "Ejercicio 1: Adivina el número",
             "/practica1/ej6" : "Ejercicio 6: Expresiones regulares",
             "/practica1/ejParaNota" : "Ejercicio para nota: Figuras SVG",
             "/modificarPerfil" : "Modificar perfil de usuario",
+            "/practica4" : "Practica 4: Pokemon GO",
             "/" : "Inicio"}
 
 #se llevan a cabo las siguientes acciones antes de cada petición
@@ -185,3 +186,20 @@ def modificarPerfil():
                 model.modificarPwd(nick, pwd)
             flash ("Datos modificados correctamente")
             return redirect(url_for("index"))
+
+
+@app.route("/practica4")
+def practica4():
+    #se reciben los parametros pasados por get si hubiera y se determina la pagina segun este parámtetro
+    filtros = request.args
+    if "pagina" in request.args:
+        if int(request.args["pagina"]) > 0:
+            pagina = int(request.args["pagina"])
+        else:
+            pagina = 0
+    else:
+        pagina = 0
+    #se obtienen los datos del modelo
+    datosAMostrar = model.obtenerPokemons(filtros, 20, pagina)
+    #se renderiza la web con los datos
+    return render_template("practica4.html", datos = datosAMostrar, filtros = filtros, url=request.url.split("?pagina")[0].split("&pagina")[0], pagina=pagina)

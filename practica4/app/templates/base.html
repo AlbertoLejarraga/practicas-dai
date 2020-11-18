@@ -29,6 +29,7 @@
                   <li><a class="dropdown-item" href="/practica1/ejParaNota">Ejercicio para nota: Figuras SVG</a></li>
                 </ul>
               </li>
+              <li class="nav-item"><a href="/practica4" class="nav-link">Practica 4</a></li>
               <li class="nav-item"><a href="https://github.com/AlbertoLejarraga" class="nav-link">Mi Github</a></li>
               <li class="nav-item"><a href="#footer" class="nav-link">Contacto</a></li>
               <li class="nav-item"><a href="/modificarPerfil" class="nav-link">Mi perfil</a></li>
@@ -67,16 +68,16 @@
 
       <div class="container mt-2 mb-4">
         <div class="row">
-          <div class="col-sm-3 bg-light">
-            <ul class="nav flex-column">
-              <li class="nav-item"><h4 class="nav-link">Últimos sitios</h3></li>
-            {% for web in session["listaWebs"] %}
-              <li class="nav-item">
-                <a class="nav-link active" href="{{web[0]}}">{{web[1]}}</a>
-              </li>
-            {% endfor %}
-            </ul>
-          </div>
+            <div class="col-sm-3 bg-light">
+              {% block colIzquierda %}
+                <ul class="nav flex-column">
+                  <li class="nav-item"><h4 class="nav-link">Últimos sitios</h4></li>
+                  {% for web in session["listaWebs"] %}
+                    <li class="nav-item"><a class="nav-link active" href="{{web[0]}}">{{web[1]}}</a></li>
+                  {% endfor %}
+                </ul>
+              {% endblock %}
+            </div>
           <div class="col-sm-9">
             {% with messages = get_flashed_messages() %}
               {%if messages %}
