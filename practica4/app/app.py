@@ -203,3 +203,28 @@ def practica4():
     datosAMostrar = model.obtenerPokemons(filtros, 20, pagina)
     #se renderiza la web con los datos
     return render_template("practica4.html", datos = datosAMostrar, filtros = filtros, url=request.url.split("?pagina")[0].split("&pagina")[0], pagina=pagina)
+
+@app.route("/borrarPokemon", methods = ["POST"])
+def borrarPokemon():
+    #model.borrarPokemon(request.form["id"])
+    flash("Se ha eliminado el pokemon " + request.form["nombre"])
+    return redirect(request.referrer)
+
+@app.route("/modificarPokemon", methods = ["POST"])
+def modificarPokemon():
+    #se obtienen los datos modificables del formulario y se introducen en un diccionario
+    datosModificar = {}
+    datosModificar["name"] = request.form["name"]
+    datosModificar["img"] = request.form["img"]
+    datosModificar["height"] = request.form["height"]
+    datosModificar["weight"] = request.form["weight"]
+    datosModificar["candy"] = request.form["candy"]
+    datosModificar["candy_count"] = request.form["candy_count"]
+    datosModificar["egg"] = request.form["egg"]
+    datosModificar["spawn_chance"] = request.form["spawn_chance"]
+    datosModificar["avg_spawns"] = request.form["avg_spawns"]
+    datosModificar["spawn_time"] = request.form["spawn_time"]
+
+    #model.modificarPokemon(request.form["_id"], datosModificar)
+    flash("Pokemon de nombre " + datosModificar["name"] + " modificado")
+    return redirect(request.referrer)
