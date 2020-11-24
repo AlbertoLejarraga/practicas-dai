@@ -1,2 +1,3 @@
-# Práctica 3 de la asignatura
-Práctica basada en el uso de la arquitectura MVC para montar la estructura de una página web utilizando el framework css "bootstrap" y el motor de plantillas de Flask, Jinja. Incluye también funcionalidad de login y una interfaz web para los ejercicios de la práctica 1.
+# Práctica 4 de la asignatura
+Continuación de la práctica anterior, en la que se incluye funcionalidad de la base de datos MongoDB. Es accesible una vez lanzado el docker-compose por la url ~/practica4. Se trata de una interfaz con lo necesario para consultar, añadir, modificar y eliminar datos sobre una colección de pokemons del juego pokemon go.
+Dicha colección se obtiene de [aquí](https://github.com/SouthbankSoftware/dbkoda-data/blob/master/SampleCollections/dump/SampleCollections/samples_pokemon.bson), tal como se especifica en el guión de la práctica.
