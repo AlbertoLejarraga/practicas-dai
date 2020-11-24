@@ -9,3 +9,6 @@ Repositorio para publicar las prácticas de la asignatura DAI 2020
 ## Practica 3: Plantillas, Manejo de Sesiones y Frameworks CSS
 * [Enunciado](https://swad.ugr.es/swad/tmp/S_/uxuaKlP4x4oa-fqhAdJq6Pf4XRM37XBVPYPj1A2yQ/DAI%20Practica%203%20-%20Plantillas_%20Sesiones_%20Frameworks%20CSS.html)
 * [Resolución](https://github.com/AlbertoLejarraga/practicas-dai/tree/main/practica3)
+## Practica 4: Bases de Datos NoSQL, CRUD
+* [Enunciado](https://swad.ugr.es/swad/tmp/CH/zu-z36ffdI_HuQoOn-p8DiNu6aFqi8hgMLurgWbRg/DAI%20Practica%204%20-%20Bases%20de%20Datos%20NoSQL_%20CRUD.html)
+* [Resolución](https://github.com/AlbertoLejarraga/practicas-dai/tree/main/practica4)
