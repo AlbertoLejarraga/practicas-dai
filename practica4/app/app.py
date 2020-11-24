@@ -187,6 +187,7 @@ def modificarPerfil():
             flash ("Datos modificados correctamente")
             return redirect(url_for("index"))
 
+NUM_POKEMONS_PAGINA = 20
 
 @app.route("/practica4")
 def practica4():
@@ -200,14 +201,16 @@ def practica4():
     else:
         pagina = 0
     #se obtienen los datos del modelo
-    datosAMostrar = model.obtenerPokemons(filtros, 20, pagina)
+    datosAMostrar = model.obtenerPokemons(filtros, NUM_POKEMONS_PAGINA, pagina)
     #se renderiza la web con los datos
     return render_template("practica4.html", datos = datosAMostrar, filtros = filtros, url=request.url.split("?pagina")[0].split("&pagina")[0], pagina=pagina)
 
 @app.route("/borrarPokemon", methods = ["POST"])
 def borrarPokemon():
-    #model.borrarPokemon(request.form["id"])
-    flash("Se ha eliminado el pokemon " + request.form["nombre"])
+    if model.borrarPokemon(request.form["_id"]):
+        flash("Se ha eliminado el pokemon " + request.form["nombre"])
+    else:
+        flash("No se ha podido eliminar el pokemon, parece que ha habido algún error. Vuelve a intentarlo o contacta con el administrador.")
     return redirect(request.referrer)
 
 @app.route("/modificarPokemon", methods = ["POST"])
@@ -225,6 +228,37 @@ def modificarPokemon():
     datosModificar["avg_spawns"] = request.form["avg_spawns"]
     datosModificar["spawn_time"] = request.form["spawn_time"]
 
-    #model.modificarPokemon(request.form["_id"], datosModificar)
-    flash("Pokemon de nombre " + datosModificar["name"] + " modificado")
+    if model.modificarPokemon(request.form["_id"], datosModificar):
+        flash("Pokemon de nombre " + datosModificar["name"] + " modificado")
+    else:
+        flash("No se ha podido modificar el pokemon, parece que ha habido algún error. Vuelve a intentarlo o contacta con el administrador.")
     return redirect(request.referrer)
+
+@app.route("/addPokemon", methods = ["POST"])
+def addPokemon():
+    #Se obtienen los datos del formularios
+    datosAdd = {}
+    datosAdd["name"] = request.form["name"]
+    datosAdd["img"] = request.form["img"]
+    datosAdd["type"] = request.form.getlist("type")
+    datosAdd["height"] = request.form["height"] + " m"
+    datosAdd["weight"] = request.form["weight"] + " kg"
+    datosAdd["candy"] = request.form["candy"]
+    datosAdd["candy_count"] = request.form["candy_count"]
+    datosAdd["egg"] = request.form["egg"]
+    datosAdd["spawn_chance"] = request.form["spawn_chance"]
+    datosAdd["avg_spawns"] = request.form["avg_spawns"]
+    datosAdd["spawn_time"] = request.form["spawn_time"]
+    datosAdd["multipliers"] = [float(request.form["multiplier"])]
+    datosAdd["weaknesses"] = request.form.getlist("weaknesses")
+    if "next_evolution" in request.form and request.form["next_evolution"] != "":
+        datosAdd["next_evolution"] = request.form["next_evolution"]
+    if "prev_evolution" in request.form and request.form["prev_evolution"] != "":
+        datosAdd["prev_evolution"] = request.form["prev_evolution"]
+
+    if model.addPokemon(datosAdd):
+        flash("Pokemon de nombre " + datosAdd["name"] + " añadido")
+    else:
+        flash("No se ha podido añadir el pokemon, parece que ha habido algún error. Vuelve a intentarlo o contacta con el administrador.")
+
+    return redirect("/practica4?pagina=" + str(int(model.totalPokemons() / NUM_POKEMONS_PAGINA) + 1))
