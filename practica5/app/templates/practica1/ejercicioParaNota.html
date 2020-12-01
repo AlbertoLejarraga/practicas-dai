@@ -1,0 +1,10 @@
+{% extends "./base.html" %}
+{% block title %} Ejercicio para nota {%endblock%}
+{% block contenido%}
+  <h1>{{nombre}}</h1>
+  <svg width='400' height='400'>
+    {{figura | safe}}
+  </svg>
+  <br>
+  <a href="/practica1/ejParaNota">Generar nueva figura</a>
+{%endblock%}
