@@ -26,7 +26,7 @@ diccURLS = {"/practica1/ej1" : "Ejercicio 1: Adivina el número",
 @app.before_request
 def before_request_callback():
     #solo interesan las llamadas get para almacenar las web visitadas, los formularios vienen siempre por post y no se almacenan
-    if request.method == "GET" and "static" not in request.url:#se excluyen las llamadas al directorio static (img, css y js)
+    if request.method == "GET" and "static" not in request.url and "api" not in request.url:#se excluyen las llamadas al directorio static (img, css y js)
         #se detecta cual es el titulo de la página solicitada segun el dicc diccURLS
         for k,v in diccURLS.items():
             if k in request.url:#si se encuentra en el diccionario se crea la variable titulo y se sale
@@ -256,9 +256,19 @@ def addPokemon():
     if "prev_evolution" in request.form and request.form["prev_evolution"] != "":
         datosAdd["prev_evolution"] = request.form["prev_evolution"]
 
-    if model.addPokemon(datosAdd):
+    if model.addPokemon(datosAdd)[0]:
         flash("Pokemon de nombre " + datosAdd["name"] + " añadido")
     else:
         flash("No se ha podido añadir el pokemon, parece que ha habido algún error. Vuelve a intentarlo o contacta con el administrador.")
 
     return redirect("/practica4?pagina=" + str(int(model.totalPokemons() / NUM_POKEMONS_PAGINA) + 1))
+
+'''Métodos API REST'''
+
+@app.route("/api/pokemons", methods = ["GET", "POST"])
+def apiListadoTotal():
+    if request.method == "GET":
+        return model.obtenerPokemons()
+    else:
+        #hacer la parte de insertar un pokemons
+        return True

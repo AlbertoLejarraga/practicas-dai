@@ -36,7 +36,11 @@ import re
 
 client = MongoClient("mongo", 27017)
 dbPokemon = client.pokemon
-def obtenerPokemons(filtros, numElems, pagina):
+MAX_ELEMS = 10000
+def obtenerPokemons(filtros={}, numElems=MAX_ELEMS, pagina=0):
+    #para el caso de que no se especifiquen parametros se devuelve todo
+    if filtros == {} and numElems == MAX_ELEMS and pagina == 0:
+        return dbPokemon.samples_pokemon.find({}, limit=MAX_ELEMS)
     filtrosAgg = {}
     if "tipo" in filtros and filtros["tipo"]!="": filtrosAgg["type"]=filtros["tipo"]
     if "tipoHuevo" in filtros and filtros["tipoHuevo"]!="": filtrosAgg["egg"]=filtros["tipoHuevo"]
