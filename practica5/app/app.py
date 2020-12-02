@@ -1,4 +1,4 @@
-from flask import Flask, render_template, flash, session, request, redirect, url_for
+from flask import Flask, render_template, flash, session, request, redirect, url_for, jsonify
 import random
 import hashlib
 from app.controller.practica1.ordenacionMatrices import ordenarMatrices
@@ -266,9 +266,37 @@ def addPokemon():
 '''Métodos API REST'''
 
 @app.route("/api/pokemons", methods = ["GET", "POST"])
-def apiListadoTotal():
+def api_pokemons():
     if request.method == "GET":
-        return model.obtenerPokemons()
-    else:
-        #hacer la parte de insertar un pokemons
-        return True
+        #Primero se comprueba si se solicitan datos paginados o no, poniendo los valores por defecto
+        pagina = request.args.get("page", 0, int)
+        numElems = request.args.get("per_page", model.MAX_ELEMS, int)
+        #ahora se obtienen los filtros, si estuvieran
+        filtros = {"nombre": request.args.get("name", ""),
+                    "tipo": request.args.get("type", ""),
+                    "tipoHuevo": request.args.get("egg", ""),
+                    "evolucion": request.args.get("evolution", "")}
+        #se devuelve un json, cuyos elementos son diccionarios correspondientes a los documentos de mongo sin la clave _id
+        json = jsonify([{k:v for k,v in documento.items() if k != "_id"} for documento in model.obtenerPokemons(filtros, numElems, pagina)])
+        return json
+    else:#POST
+        #se comprueba si se han recibido todos los valores required
+        valoresRequired = ["name", "img", "type", "height", "weight", "candy", "candy_count",
+                            "egg", "spawn_chance", "avg_spawns", "spawn_time", "multipliers", "weaknesses"]
+        datosEntrada = dict(request.get_json())
+        for valor in valoresRequired:
+            if valor not in datosEntrada.keys() or datosEntrada[valor] == "":
+                return {"Error": "Debe introducir, al menos, todos los valores requeridos: " + str(valoresRequired) + ", revise " + valor}
+        #ahora se obtienen los datos insertables, los anteriores más estos dos opcionales
+        valoresInsertables = valoresRequired + ["next_evolution", "prev_evolution"]
+        datosAdd = {}
+        for clave in datosEntrada:#se obtienen solo las claves insertables, si hubiera más se descartan
+            if clave in valoresInsertables:
+                datosAdd[clave] = datosEntrada.get(clave)
+        #por último, se modifica el formato de multipliers
+        datosAdd["multipliers"] = [datosAdd["multipliers"]]
+        resul = model.addPokemon(datosAdd)
+        if resul[0]:#si todo es correcto se retorna el id, si no se retorna un error
+            return jsonify(resul[1])
+        else:
+            return {"Error": "No ha podido insertarse el pokemon"}

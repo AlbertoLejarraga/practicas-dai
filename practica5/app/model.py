@@ -38,17 +38,12 @@ client = MongoClient("mongo", 27017)
 dbPokemon = client.pokemon
 MAX_ELEMS = 10000
 def obtenerPokemons(filtros={}, numElems=MAX_ELEMS, pagina=0):
-    #para el caso de que no se especifiquen parametros se devuelve todo
-    if filtros == {} and numElems == MAX_ELEMS and pagina == 0:
-        return dbPokemon.samples_pokemon.find({}, limit=MAX_ELEMS)
     filtrosAgg = {}
     if "tipo" in filtros and filtros["tipo"]!="": filtrosAgg["type"]=filtros["tipo"]
     if "tipoHuevo" in filtros and filtros["tipoHuevo"]!="": filtrosAgg["egg"]=filtros["tipoHuevo"]
     if "evolucion" in filtros and filtros["evolucion"]!="": filtrosAgg["evolucion"]=filtros["evolucion"]
     if "nombre" in filtros and filtros["nombre"]!="":
-        filtrosAgg["name"] = {
-                                                                                '$regex': re.compile(r"{}(?i)".format(filtros["nombre"]))
-                                                                            }
+        filtrosAgg["name"] = {'$regex': re.compile(r"{}(?i)".format(filtros["nombre"]))}
 
     pipeline = [
     {#addfields para añadir el campo evolucion
@@ -134,7 +129,8 @@ def addPokemon(datosAdd):
         else:
             datosAdd.pop("prev_evolution", None)
     id_insertado = dbPokemon.samples_pokemon.insert_one(datosAdd).inserted_id
-
-    return id_insertado != None
+    resul = id_insertado != None
+    datosPokemon = dbPokemon.samples_pokemon.find_one({"_id":ObjectId(id_insertado)})
+    return resul, {k:v for k,v in datosPokemon.items() if k != "_id"}
 def totalPokemons():
     return dbPokemon.samples_pokemon.count()
