@@ -12,3 +12,6 @@ Repositorio para publicar las prácticas de la asignatura DAI 2020
 ## Practica 4: Bases de Datos NoSQL, CRUD
 * [Enunciado](https://swad.ugr.es/swad/tmp/CH/zu-z36ffdI_HuQoOn-p8DiNu6aFqi8hgMLurgWbRg/DAI%20Practica%204%20-%20Bases%20de%20Datos%20NoSQL_%20CRUD.html)
 * [Resolución](https://github.com/AlbertoLejarraga/practicas-dai/tree/main/practica4)
+## Practica 5: API REST
+* [Enunciado](https://swad.ugr.es/swad/tmp/Gr/VV96pXOuncWcZWlmshSjzpB-EPDPOlDjDPcd6PONY/DAI%20Practica%205%20-%20API%20REST.html)
+* [Resolución](https://github.com/AlbertoLejarraga/practicas-dai/tree/main/practica5)

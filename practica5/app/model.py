@@ -95,6 +95,9 @@ def obtenerPokemons(filtros={}, numElems=MAX_ELEMS, pagina=0):
 def borrarPokemon(id):
     resul = dbPokemon.samples_pokemon.delete_one({"_id":ObjectId(id)})
     return resul.deleted_count == 1
+def borrarPokemonID(id):
+    resul = dbPokemon.samples_pokemon.delete_one({"id":id})
+    return resul.deleted_count == 1
 def modificarPokemon(id, datosModificar):
     mod = dbPokemon.samples_pokemon.update_one({"_id":ObjectId(id)}, {"$set" : datosModificar})
     return mod.modified_count == 1

@@ -1,3 +1,33 @@
-# Práctica 4 de la asignatura
-Continuación de la práctica anterior, en la que se incluye funcionalidad de la base de datos MongoDB. Es accesible una vez lanzado el docker-compose por la url ~/practica4. Se trata de una interfaz con lo necesario para consultar, añadir, modificar y eliminar datos sobre una colección de pokemons del juego pokemon go.
-Dicha colección se obtiene de [aquí](https://github.com/SouthbankSoftware/dbkoda-data/blob/master/SampleCollections/dump/SampleCollections/samples_pokemon.bson), tal como se especifica en el guión de la práctica.
+# Práctica 5 de la asignatura
+Se añade al sitio la posibilidad de ser consultado mediante llamadas a una API REST.
+Los métodos son los siguientes:
+### GET
+  * Se aceptan los parámetros "name", "type", "egg" y "evolution" para filtrar los resultados devueltos
+  * Por otro lado se permite la paginación de los resultados mediante el uso de los parámetros "page" y "per_page"
+  * URL: ~/api/pokemons
+  * Ejemplo: ~/api/pokemons?page=2&per_page=3&name=bulbasaur
+### POST
+  * Se requiere la recepción de un JSON con las siguientes claves:
+    * "name"
+    * "img"
+    * "type"
+    * "height"
+    * "weight"
+    * "candy"
+    * "candy_count"
+    * "egg"
+    * "spawn_chance"
+    * "avg_spawns"
+    * "spawn_time"
+    * "multipliers"
+    * "weaknesses"
+  * Permite también que se incluya las siguientes:
+    * "next_evolution"
+    * "prev_evolution"
+  * URL: ~/api/pokemons
+### PUT
+  * Se recibe el id del pokemon y los datos a modificar en formato JSON.
+  * URL: ~/api/pokemons/\<id>
+### DELETE
+  * Se recibe el id del pokemon
+  * URL: ~/api/pokemons/\<id>

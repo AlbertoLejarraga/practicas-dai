@@ -319,3 +319,9 @@ def api_pokemon_put_delete(id):
 
         else:
             return {"Error": "No se ha podido modificar el pokemon"}
+    else:#DELETE
+        if model.borrarPokemonID(id):
+            return {"Resultado": "Borrado correcto", "id":id}
+        else:
+            return {"Error": "No se ha podido eliminar el pokemon"}
+        
