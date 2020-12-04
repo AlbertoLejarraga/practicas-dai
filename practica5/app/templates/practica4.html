@@ -235,15 +235,15 @@ dal-footer">
       </div>
       <div class="text-center">
         {% if "?" in url %}<!--La diferencia es el ?pagina o &pagina-->
-          {% if pagina > 0 %}
-            <a href="{{url}}&pagina={{pagina - 1}}">Página anterior<i class="fas fa-arrow-left"></i></a> |
+          {% if page > 0 %}
+            <a href="{{url}}&page={{page - 1}}">Página anterior<i class="fas fa-arrow-left"></i></a> |
           {% endif %}
-          <a href="{{url}}&pagina={{pagina + 1}}"><i class="fas fa-arrow-right"></i>Página siguiente</a>
+          <a href="{{url}}&page={{page + 1}}"><i class="fas fa-arrow-right"></i>Página siguiente</a>
         {% else %}
-          {% if pagina > 0 %}
-            <a href="{{url}}?pagina={{pagina - 1}}">Página anterior<i class="fas fa-arrow-left"></i></a> |
+          {% if page > 0 %}
+            <a href="{{url}}?page={{page - 1}}">Página anterior<i class="fas fa-arrow-left"></i></a> |
           {% endif %}
-          <a href="{{url}}?pagina={{pagina + 1}}"><i class="fas fa-arrow-right"></i>Página siguiente</a>
+          <a href="{{url}}?page={{page + 1}}"><i class="fas fa-arrow-right"></i>Página siguiente</a>
         {% endif %}
     {% endif %}
 

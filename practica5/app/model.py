@@ -96,8 +96,14 @@ def borrarPokemon(id):
     resul = dbPokemon.samples_pokemon.delete_one({"_id":ObjectId(id)})
     return resul.deleted_count == 1
 def modificarPokemon(id, datosModificar):
-    resul = dbPokemon.samples_pokemon.update_one({"_id":ObjectId(id)}, {"$set" : datosModificar})
-    return resul.modified_count == 1
+    mod = dbPokemon.samples_pokemon.update_one({"_id":ObjectId(id)}, {"$set" : datosModificar})
+    return mod.modified_count == 1
+def modificarPokemonID(id, datosModificar):
+    #iogual que la anterior pero conn el campo id en vez de _id
+    mod = dbPokemon.samples_pokemon.update_one({"id":id}, {"$set" : datosModificar})
+    return mod.modified_count == 1
+def obtenerPokemonID(id):
+    return dbPokemon.samples_pokemon.find_one({"id":id})
 def addPokemon(datosAdd):
     #lo primero que se necesita es obtener el valor de id (no _id) del último pokemon,
     #para que el id del nuevo pokemon sea uno más que este

@@ -193,17 +193,17 @@ NUM_POKEMONS_PAGINA = 20
 def practica4():
     #se reciben los parametros pasados por get si hubiera y se determina la pagina segun este parámtetro
     filtros = request.args
-    if "pagina" in request.args:
-        if int(request.args["pagina"]) > 0:
-            pagina = int(request.args["pagina"])
+    if "page" in request.args:
+        if int(request.args["page"]) > 0:
+            page = int(request.args["page"])
         else:
-            pagina = 0
+            page = 0
     else:
-        pagina = 0
+        page = 0
     #se obtienen los datos del modelo
-    datosAMostrar = model.obtenerPokemons(filtros, NUM_POKEMONS_PAGINA, pagina)
+    datosAMostrar = model.obtenerPokemons(filtros, NUM_POKEMONS_PAGINA, page)
     #se renderiza la web con los datos
-    return render_template("practica4.html", datos = datosAMostrar, filtros = filtros, url=request.url.split("?pagina")[0].split("&pagina")[0], pagina=pagina)
+    return render_template("practica4.html", datos = datosAMostrar, filtros = filtros, url=request.url.split("?page")[0].split("&page")[0], page=page)
 
 @app.route("/borrarPokemon", methods = ["POST"])
 def borrarPokemon():
@@ -266,7 +266,7 @@ def addPokemon():
 '''Métodos API REST'''
 
 @app.route("/api/pokemons", methods = ["GET", "POST"])
-def api_pokemons():
+def api_pokemons_get_post():
     if request.method == "GET":
         #Primero se comprueba si se solicitan datos paginados o no, poniendo los valores por defecto
         pagina = request.args.get("page", 0, int)
@@ -277,7 +277,8 @@ def api_pokemons():
                     "tipoHuevo": request.args.get("egg", ""),
                     "evolucion": request.args.get("evolution", "")}
         #se devuelve un json, cuyos elementos son diccionarios correspondientes a los documentos de mongo sin la clave _id
-        json = jsonify([{k:v for k,v in documento.items() if k != "_id"} for documento in model.obtenerPokemons(filtros, numElems, pagina)])
+        datos = model.obtenerPokemons(filtros, numElems, pagina)
+        json = jsonify([{k:v for k,v in documento.items() if k != "_id"} for documento in datos])
         return json
     else:#POST
         #se comprueba si se han recibido todos los valores required
@@ -300,3 +301,21 @@ def api_pokemons():
             return jsonify(resul[1])
         else:
             return {"Error": "No ha podido insertarse el pokemon"}
+
+@app.route("/api/pokemons/<int:id>", methods = ["PUT", "DELETE"])
+def api_pokemon_put_delete(id):
+    if request.method == "PUT":
+        #Se modifica un pokemon según los campos recibidos, comprobados previamente
+        valoresModificables = ["name", "img", "height", "weight", "candy", "candy_count", "egg", "spawn_chance", "avg_spawns", "spawn_time"]
+        datosEntrada = dict(request.get_json())
+        #se obtiene un diccionario con los campos a modificar, si hubiera alguno más se deshecha
+        datosModificar = {k:v for k,v in datosEntrada.items() if k in valoresModificables}
+        #se modifica y se obtienen los datos modificados
+        resulMod = model.modificarPokemonID(id, datosModificar)
+        if resulMod is True:
+            datos = model.obtenerPokemonID(id)
+            datos.pop("_id")
+            return datos
+
+        else:
+            return {"Error": "No se ha podido modificar el pokemon"}
