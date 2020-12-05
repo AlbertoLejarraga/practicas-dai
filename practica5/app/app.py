@@ -1,4 +1,5 @@
 from flask import Flask, render_template, flash, session, request, redirect, url_for, jsonify
+from flask_restful import Resource, Api, reqparse
 import random
 import hashlib
 from app.controller.practica1.ordenacionMatrices import ordenarMatrices
@@ -7,9 +8,13 @@ from app.controller.practica1.fibonacciFichero import fibonacci
 from app.controller.practica1.cadenasCorchetes import checkBalanceados
 from app.controller.practica1.expresionesRegulares import ejercicio as expresionesRegulares
 from app import model
+from app import apiFlask
 
 app = Flask(__name__)
 app.secret_key = "clave-secreta-shhh"
+api = Api(app)
+api.add_resource(apiFlask.Pokemon, "/apiFlask/pokemons")
+api.add_resource(apiFlask.PokemonID, "/apiFlask/pokemons/<id>")
 #diccionario para almacenar los titulos de las webs
 diccURLS = {"/practica1/ej1" : "Ejercicio 1: Adivina el número",
             "/practica1/ej2" : "Ejercicio 2: Ordenación de matrices",
@@ -296,6 +301,8 @@ def api_pokemons_get_post():
                 datosAdd[clave] = datosEntrada.get(clave)
         #por último, se modifica el formato de multipliers
         datosAdd["multipliers"] = [datosAdd["multipliers"]]
+        datosAdd["weight"] = datosAdd["weight"] + " kg"
+        datosAdd["height"] = datosAdd["height"] + " m"
         resul = model.addPokemon(datosAdd)
         if resul[0]:#si todo es correcto se retorna el id, si no se retorna un error
             return jsonify(resul[1])
@@ -324,4 +331,3 @@ def api_pokemon_put_delete(id):
             return {"Resultado": "Borrado correcto", "id":id}
         else:
             return {"Error": "No se ha podido eliminar el pokemon"}
-        

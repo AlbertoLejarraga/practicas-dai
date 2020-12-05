@@ -39,10 +39,10 @@ dbPokemon = client.pokemon
 MAX_ELEMS = 10000
 def obtenerPokemons(filtros={}, numElems=MAX_ELEMS, pagina=0):
     filtrosAgg = {}
-    if "tipo" in filtros and filtros["tipo"]!="": filtrosAgg["type"]=filtros["tipo"]
-    if "tipoHuevo" in filtros and filtros["tipoHuevo"]!="": filtrosAgg["egg"]=filtros["tipoHuevo"]
-    if "evolucion" in filtros and filtros["evolucion"]!="": filtrosAgg["evolucion"]=filtros["evolucion"]
-    if "nombre" in filtros and filtros["nombre"]!="":
+    if "tipo" in filtros and filtros["tipo"]!="" and filtros["tipo"] is not None: filtrosAgg["type"]=filtros["tipo"]
+    if "tipoHuevo" in filtros and filtros["tipoHuevo"]!="" and filtros["tipoHuevo"] is not None: filtrosAgg["egg"]=filtros["tipoHuevo"]
+    if "evolucion" in filtros and filtros["evolucion"]!="" and filtros["evolucion"] is not None: filtrosAgg["evolucion"]=filtros["evolucion"]
+    if "nombre" in filtros and filtros["nombre"]!="" and filtros["nombre"] is not None:
         filtrosAgg["name"] = {'$regex': re.compile(r"{}(?i)".format(filtros["nombre"]))}
 
     pipeline = [
