@@ -14,7 +14,7 @@ app = Flask(__name__)
 app.secret_key = "clave-secreta-shhh"
 api = Api(app)
 api.add_resource(apiFlask.Pokemon, "/apiFlask/pokemons")
-api.add_resource(apiFlask.PokemonID, "/apiFlask/pokemons/<id>")
+api.add_resource(apiFlask.PokemonID, "/apiFlask/pokemons/<int:id>")
 #diccionario para almacenar los titulos de las webs
 diccURLS = {"/practica1/ej1" : "Ejercicio 1: Adivina el número",
             "/practica1/ej2" : "Ejercicio 2: Ordenación de matrices",

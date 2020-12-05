@@ -26,6 +26,17 @@ parserPost.add_argument("weaknesses", type=list, required=True, help="El campo w
 parserPost.add_argument("next_evolution", type=str, location='json')
 parserPost.add_argument("prev_evolution", type=str, location='json')
 
+parserPut = reqparse.RequestParser()
+parserPut.add_argument("name", type=str, location='json')
+parserPut.add_argument("img", type=str, location='json')
+parserPut.add_argument("height", type=float, location='json')
+parserPut.add_argument("weight", type=float, location='json')
+parserPut.add_argument("candy", type=str, location='json')
+parserPut.add_argument("candy_count", type=int, location='json')
+parserPut.add_argument("egg", type=str, location='json')
+parserPut.add_argument("spawn_chance", type=float, location='json')
+parserPut.add_argument("avg_spawns", type=float, location='json')
+parserPut.add_argument("spawn_time", type=str, location='json')
 
 
 
@@ -56,5 +67,20 @@ class Pokemon(Resource):
             return {"Error": "No ha podido insertarse el pokemon"}
 
 class PokemonID(Resource):
-    def delete(self):
-        return {}
+    def delete(self, id):
+        if model.borrarPokemonID(id):
+            return {"Resultado": "Borrado correcto", "id":id}
+        else:
+            return {"Error": "No se ha podido eliminar el pokemon"}
+    def put(self, id):
+        args = parserPut.parse_args()
+        args = {k:v for k,v in args.items() if v is not None}
+        #se modifica y se obtienen los datos modificados
+        resulMod = model.modificarPokemonID(id, args)
+        if resulMod is True:
+            datos = model.obtenerPokemonID(id)
+            datos.pop("_id")
+            return datos
+
+        else:
+            return {"Error": "No se ha podido modificar el pokemon"}
