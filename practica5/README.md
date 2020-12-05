@@ -32,4 +32,4 @@ Los métodos son los siguientes:
   * Se recibe el id del pokemon
   * URL: ~/api/pokemons/\<id>
 
-Por último, se desarrolla una api igual pero utilizando la libreria flask_restfull, en [este fichero](https://github.com/AlbertoLejarraga/practicas-dai/tree/main/practica5/apiFlask.py). Es accesible exactamente de la misma manera que la anterior pero a través de la url "apiFlask/pokemons"
+Por último, se desarrolla una api igual pero utilizando la libreria flask_restfull, en [este fichero](https://github.com/AlbertoLejarraga/practicas-dai/tree/main/practica5/apiFlask.py). Es accesible exactamente de la misma manera que la anterior pero a través de la url "~/apiFlask/pokemons"
