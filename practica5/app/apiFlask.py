@@ -38,11 +38,6 @@ parserPut.add_argument("spawn_chance", type=float, location='json')
 parserPut.add_argument("avg_spawns", type=float, location='json')
 parserPut.add_argument("spawn_time", type=str, location='json')
 
-
-
-
-
-
 class Pokemon(Resource):
     def get(self):
         #opcion de paginar o no y filtrar por nombre, tipo, tipo de huevo y evolución
