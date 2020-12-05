@@ -4,10 +4,10 @@ from flask import request
 parserGet = reqparse.RequestParser()
 parserGet.add_argument('page', 0, type=int, help="Página a mostrar")
 parserGet.add_argument('per_page', model.MAX_ELEMS, type=int, help="Número de elementos por página")
-parserGet.add_argument('nombre', type=str, help="Nombre del pokemon")
-parserGet.add_argument('tipo', type=str, help="Tipo de pokemon")
-parserGet.add_argument('tipoHuevo', type=str, help="Tipo de huevo")
-parserGet.add_argument('evolucion', type=str, help="Número de evolución")
+parserGet.add_argument('name', type=str, help="Nombre del pokemon")
+parserGet.add_argument('type', type=str, help="Tipo de pokemon")
+parserGet.add_argument('egg', type=str, help="Tipo de huevo")
+parserGet.add_argument('evolution', type=str, help="Número de evolución")
 
 parserPost = reqparse.RequestParser()
 parserPost.add_argument("name", type=str, required=True, help="El campo name no puede ser vacío.", location='json')
@@ -42,6 +42,11 @@ class Pokemon(Resource):
     def get(self):
         #opcion de paginar o no y filtrar por nombre, tipo, tipo de huevo y evolución
         args = parserGet.parse_args()
+        #hay que traducir esto para adecuarlo al modelo
+        args["nombre"] = args.pop("name")
+        args["tipo"] = args.pop("type")
+        args["tipoHuevo"] = args.pop("egg")
+        args["evolucion"] = args.pop("evolution")
         datos = model.obtenerPokemons(args, args["per_page"], args["page"])
         json = [{k:v for k,v in documento.items() if k != "_id"} for documento in datos]
         return json
