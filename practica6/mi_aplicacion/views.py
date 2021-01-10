@@ -110,13 +110,19 @@ def prestamos(request):
     return render(request, 'prestamos.html', context)
 def prestarLibro(request, pk):
     if request.method == "POST":
-        form = formPrestamo(request.POST)
-        if form.is_valid():
-            form.save()
+        libroAPrestar = Prestamo.objects.filter(libro_id=int(request.POST["libro"])).filter(estado="a")
+        #si está vacio es que no está prestado
+        if not libroAPrestar.exists():
+            form = formPrestamo(request.POST)
+            if form.is_valid():
+                form.save()
+            else:
+                messages.add_message(request, messages.ERROR,  str(form))
+            messages.add_message(request, messages.SUCCESS, 'Libro prestado correctamente')
+            return HttpResponseRedirect("/biblioteca/prestamos")
         else:
-            messages.add_message(request, messages.ERROR,  str(form))
-        messages.add_message(request, messages.SUCCESS, 'Libro prestado correctamente')
-        return HttpResponseRedirect("/biblioteca/prestamos")
+            messages.add_message(request, messages.WARNING, 'El libro se encuentra prestado actualmente')
+            return HttpResponseRedirect("/biblioteca/libros")
     else:
         libroAPrestar = Prestamo.objects.filter(libro_id=int(pk)).filter(estado="a")
         #si está vacio es que no está prestado
