@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% block title %} Prestamo nuevo {% endblock %}
+
+{% block contenido %}
+<div class="container">
+  <form method="post">
+    {% load crispy_forms_tags %}
+    {% crispy formPrestamo %}
+  </form>
+</div>
+{% endblock %}

@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% block title %} Modificar libros {% endblock %}
+
+{% block contenido %}
+<div class="container">
+  <form method="post">
+    {% load crispy_forms_tags %}
+    {% crispy formAddLibro %}
+  </form>
+</div>
+{% endblock %}

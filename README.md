@@ -15,3 +15,6 @@ Repositorio para publicar las prácticas de la asignatura DAI 2020
 ## Practica 5: API REST
 * [Enunciado](https://swad.ugr.es/swad/tmp/Gr/VV96pXOuncWcZWlmshSjzpB-EPDPOlDjDPcd6PONY/DAI%20Practica%205%20-%20API%20REST.html)
 * [Resolución](https://github.com/AlbertoLejarraga/practicas-dai/tree/main/practica5)
+## Practica 6: Django
+* [Enunciado](https://swad.ugr.es/swad/tmp/5v/EhLHCDyhYZmvZPHkL1xIeU6ptfGNXQsFPHryiN_Lk/DAI%20Practica%206%20-%20Django.html)
+* [Resolución](https://github.com/AlbertoLejarraga/practicas-dai/tree/main/practica6)

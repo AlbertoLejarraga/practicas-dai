@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+{% block title %} Libros {% endblock %}
+{% block colIzquierda %}
+<ul class="nav flex-column">
+  <li class = "nav-item"><hr style="border-width: 5px;"></li>
+  <li class = "nav-item text-center">
+    <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#modalAddLibro"><h4 class="nav-link">Añadir libro</h4></button>
+  </li>
+</ul>
+{% endblock %}
+{% block contenido %}
+
+  <div class="container row text-center">
+    {% for libro in libros %}
+      <div class="card bg-light mb-1 mr-1" style="width: 12rem;">
+        <h5 class="card-title text-center">{{libro.titulo}}</h5>
+        <img class="card-img" src="{{libro.imagen}}" alt="{{libro.titulo}}">
+        <div class="card-body">
+          <div class="collapse-content">
+            <p class="card-text collapse  text-left" id="contenido-{{libro.id}}">
+              <b>ISBN:</b> {{libro.isbn}}<br>
+              <b>Autor/es:</b> {% for autor in libro.autor.all %}
+                              {{autor.nombre}} {{autor.apellidos}}{% if not forloop.last %},{% endif %}
+                            {% endfor %}
+              <br>
+            </p>
+            <a class="btn  p-1 my-1 mr-0 mml-1 collapsed" data-toggle="collapse" href="#contenido-{{libro.id}}" aria-expanded="false" aria-controls="collapseContent"><i class="fas fa-info-circle"></i></a>
+            <form method="post" action="{% url 'eliminarLibro'%}" onsubmit="return confirm('Vas a borrar el libro {{libro}}, estás seguro?')">
+              {% csrf_token %}
+              <input type="hidden" name="id" value="{{libro.id}}">
+              <button type="submit" class="btn"><i class="fas fa-trash"></i></button>
+              <button type="button" class="btn" onclick="location.href='{% url 'modificarLibro' pk=libro.id %}';"><i class="fas fa-edit"></i></button>
+              <button type="button" class="btn" onclick="location.href='{% url 'prestarLibro' pk=libro.id %}';"><i class="fas fa-handshake"></i></button>
+            </form>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+  <!--Ventanas modales-->
+  <!--modal para añadir -->
+  <div class="modal fade" id="modalAddLibro" tabindex="-1" role="dialog" aria-labelledby="tituloModal" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="tituloModal">Añadir libro</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body form-group text-center">
+          <form method="post" action="{% url 'libroNuevo' %}">
+            {% load crispy_forms_tags %}
+            {% crispy formAddLibro %}
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+{%endblock%}
