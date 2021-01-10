@@ -10,5 +10,5 @@ Repositorio para publicar las prácticas de la asignatura DAI 2020
 * [Resolución](https://github.com/AlbertoLejarraga/practicas-dai/tree/main/practica4)
 ## Practica 5: API REST
 * [Resolución](https://github.com/AlbertoLejarraga/practicas-dai/tree/main/practica5)
-## Practica 6: Django con autenticación
+## Practica 6-7: Django con autenticación
 * [Resolución](https://github.com/AlbertoLejarraga/practicas-dai/tree/main/practica6)
