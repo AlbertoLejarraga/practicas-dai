@@ -1,5 +1,6 @@
 from django.urls import path
 from . import views
+from django.conf.urls import include
 
 urlpatterns = [
   path('', views.index, name='index'),
@@ -18,4 +19,10 @@ urlpatterns = [
   path('biblioteca/usuarios/modificar/<int:pk>', views.modificarUsuario, name='modificarUsuario'),
   path('biblioteca/autores', views.autores, name='autores'),
   path('biblioteca/autores/eliminar', views.eliminarAutor, name='eliminarAutor'),
+]
+
+#Add Django site authentication urls (for login, logout, password management)
+
+urlpatterns += [
+    path('accounts/', include('django.contrib.auth.urls')),
 ]

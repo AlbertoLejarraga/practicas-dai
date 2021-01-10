@@ -10,6 +10,8 @@ class Autor(models.Model):
 
     def __str__(self):
         return self.nombre + " " + self.apellidos
+    class Meta:
+        permissions = (("modificar_autor", "Añadir o eliminar autores"),)
 
 class Libro(models.Model):
     isbn    = models.CharField(max_length=13, validators=[RegexValidator(regex='^.{13}$')])
@@ -19,6 +21,8 @@ class Libro(models.Model):
 
     def __str__(self):
         return self.titulo
+    class Meta:
+        permissions = (("modificar_libros", "Añadir, modificar o eliminar autores"),)
 
 class Usuario(models.Model):
     class Tipo(models.TextChoices):
@@ -29,9 +33,12 @@ class Usuario(models.Model):
     nombre      = models.CharField(max_length=200)
     apellidos   = models.CharField(max_length=200)
     tipo        = models.CharField(max_length=1, choices=Tipo.choices, default=Tipo.CLIENTE)
+    email       = models.EmailField(max_length=100)
 
     def __str__(self):
         return self.nombre + " " + self.apellidos
+    class Meta:
+        permissions = (("modificar_usuarios", "Añadir, modificar o eliminar usuarios"),)
 
 class Prestamo(models.Model):
     class Estado(models.TextChoices):
@@ -48,3 +55,5 @@ class Prestamo(models.Model):
         return fechaDev
     def caducado(self):
         return self.fechaDevolucion() <= date.today()
+    class Meta:
+        permissions = (("modificar_prestamo", "Modificar, eliminar o cambiar el estado a un préstamo"),)

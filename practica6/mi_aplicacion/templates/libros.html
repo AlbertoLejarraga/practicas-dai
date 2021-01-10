@@ -1,13 +1,21 @@
 {% extends 'base.html' %}
 {% block title %} Libros {% endblock %}
+
+
 {% block colIzquierda %}
-<ul class="nav flex-column">
-  <li class = "nav-item"><hr style="border-width: 5px;"></li>
-  <li class = "nav-item text-center">
-    <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#modalAddLibro"><h4 class="nav-link">Añadir libro</h4></button>
-  </li>
-</ul>
+  {% if perms.mi_aplicacion.modificar_libros %}
+  <ul class="nav flex-column">
+    <li class = "nav-item"><hr style="border-width: 5px;"></li>
+    <li class = "nav-item text-center">
+      <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#modalAddLibro"><h4 class="nav-link">Añadir libro</h4></button>
+    </li>
+  </ul>
+  {%else%}
+  {{block.super}}
+  {% endif %}
+
 {% endblock %}
+
 {% block contenido %}
 
   <div class="container row text-center">
@@ -28,8 +36,10 @@
             <form method="post" action="{% url 'eliminarLibro'%}" onsubmit="return confirm('Vas a borrar el libro {{libro}}, estás seguro?')">
               {% csrf_token %}
               <input type="hidden" name="id" value="{{libro.id}}">
+              {% if perms.mi_aplicacion.modificar_libros %}
               <button type="submit" class="btn"><i class="fas fa-trash"></i></button>
               <button type="button" class="btn" onclick="location.href='{% url 'modificarLibro' pk=libro.id %}';"><i class="fas fa-edit"></i></button>
+              {% endif %}
               <button type="button" class="btn" onclick="location.href='{% url 'prestarLibro' pk=libro.id %}';"><i class="fas fa-handshake"></i></button>
             </form>
           </div>

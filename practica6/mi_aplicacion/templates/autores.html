@@ -1,12 +1,17 @@
 {%extends 'base.html'%}
-{% block colIzquierda %}
-<ul class="nav flex-column">
-  <li class = "nav-item"><hr style="border-width: 5px;"></li>
-  <li class = "nav-item text-center">
-    <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#modalCrearAutor"><h4 class="nav-link">Añadir autor</h4></button>
-  </li>
-</ul>
-{% endblock %}
+
+{% if perms.mi_aplicacion.modificar_autor %}
+  {% block colIzquierda %}
+  <ul class="nav flex-column">
+    <li class = "nav-item"><hr style="border-width: 5px;"></li>
+    <li class = "nav-item text-center">
+      <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#modalCrearAutor"><h4 class="nav-link">Añadir autor</h4></button>
+    </li>
+  </ul>
+  {% endblock %}
+{% endif %}
+
+
 {% block contenido %}
 <div class="container row text-center">
   {% for autor in autores %}
@@ -17,7 +22,7 @@
         <input type="hidden" name="id" value="{{autor.id}}">
         <button type="submit" class="btn"><i class="fas fa-trash"></i></button>
       </form>
-      
+
     </div>
   {% endfor %}
 </div>
