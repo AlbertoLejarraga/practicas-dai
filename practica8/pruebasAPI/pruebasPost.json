@@ -1,0 +1,17 @@
+{
+  "name": "pokemon1",
+  "img": "https://www.serebii.net/pokemongo/pokemon/002.png",
+  "type": ["Water", "Normal"],
+  "height": 1.90,
+  "weight": 80,
+  "candy": "pokemon1 candy",
+  "candy_count": 55,
+  "egg": "2 km",
+  "spawn_chance": 0.25,
+  "avg_spawns": 25,
+  "spawn_time": "16:25",
+  "multipliers": 0.6,
+  "weaknesses": ["Ground", "Rock", "Fighting"],
+  "next_evolution": 5,
+  "este_no_lo_tiene_que_coger": 87954
+}
