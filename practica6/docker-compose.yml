@@ -16,11 +16,25 @@ services:
     restart: always
     ports:
       - "8080:8080"
+  nginx:
+    image: nginx:alpine
+    ports:
+      - "80:80"
+    volumes:
+      - ./conf:/etc/nginx/conf.d
+      - ./web/static:/var/www/static
+    depends_on:
+      - web
   web:
     build: .
-    command: python manage.py runserver 0.0.0.0:8000
+    restart: always
+    command: sh -c "python manage.py makemigrations &&
+                    python manage.py migrate &&
+                    python manage.py collectstatic --noinput &&
+                    gunicorn mi_sitio_web.wsgi:application --bind 0.0.0.0:8000"
+    #command: python manage.py runserver 0.0.0.0:8000
     volumes:
-      - .:/code
+      - ./web:/web
     ports:
       - "8000:8000"
     depends_on:

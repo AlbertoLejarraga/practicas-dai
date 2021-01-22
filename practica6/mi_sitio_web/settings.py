@@ -26,9 +26,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = '#eoy9s9s#su2d6u^)r2_vr(dl_0(r!7r6f+&he*%e1^659o2_e'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = ["0.0.0.0", "192.168.1.59", "127.0.0.1"]
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -138,7 +138,12 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+#STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+STATICFILES_DIRS = ()
+
+STATIC_ROOT = os.path.join(BASE_DIR, '/web/static')
+
+
 INSTALLED_APPS = (
   'django.contrib.admin',
   'django.contrib.auth',
