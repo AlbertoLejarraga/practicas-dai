@@ -1,0 +1,51 @@
+{% extends "./base.html" %}
+{% block scripts %}
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js" integrity="sha512-d9xgZrVZpmmQlfonhQUvTR7lMPtO7NkZMkA0ABN3PHCbKA5nqylQ/yWlFAyY6hYgdF1Qh6nYiuADWwKB4C2WSw==" crossorigin="anonymous"></script>
+  <script type="text/javascript" src="/static/js/practica10.js" crossorigin="anonymous"></script>
+{% endblock %}
+{% block title %} Practica 4: Pokemon GO{%endblock%}
+{% block colIzquierda %}
+<ul class="nav flex-column">
+  <div class=" bg-light text-dark">
+    <li class = "nav-item">
+      <div class="form-group bg-light text-dark">
+        <label for="nombre">Nombre:</label><br>
+        <input type="text" name="nombre" id="nombre" class="bg-light" placeholder="-----">
+      </div>
+    </li>
+    <li class = "nav-item">
+      <div class="form-group  bg-light text-dark">
+        <label for="listaPoks">Seleccione los pokemon de uno en uno:</label><br>
+        <select name="listaPoks" id="listaPoks" class="w-75">
+
+        </select><br>
+        <button type="button" class="btn" id="botonTodos"><i class="fas fa-angle-double-down"></i></button>
+        <button type="button" class="btn" id="botonNinguno"><i class="fas fa-angle-double-up"></i></button>
+
+      </div>
+    </li>
+    <li class="nav-item">
+      <div class="bg-light text-dark" id="pokSeleccionados" style="overflow-y: scroll; height:400px;">
+        <ul>
+        </ul>
+      </div>
+    </li>
+  </div>
+</ul>
+{% endblock %}
+{% block contenido %}
+<nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm text-success">
+  <div class="container">
+    <button type="button" data-toggle="collapse" data-target="#navBarAnalisis" aria-controls="navBarAnalisis" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler"><span class="navbar-toggler-icon"></span></button>
+    <div id="navBarAnalisis" class="collapse navbar-collapse">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item"><a href="#" class="nav-link" id="linkTipo">Tipo</a></li>
+        <li class="nav-item"><a href="#" class="nav-link" id="linkAltura">Altura</a></li>
+        <li class="nav-item"><a href="#" class="nav-link" id="linkPeso">Peso</a></li>
+        <li class="nav-item"><a href="#" class="nav-link" id="linkTipoHuevo">Tipo de huevo</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+<div id="divCanvas" class="text-center"><canvas id="canvas" width="400" height="300" style="width: 100%; height:30rem"></canvas></div>
+{% endblock %}

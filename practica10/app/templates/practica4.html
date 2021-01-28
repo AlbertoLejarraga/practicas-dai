@@ -1,0 +1,361 @@
+{% extends "./base.html" %}
+{% block scripts %}
+<script src="/static/js/notificaciones.js" type="application/javascript" async> </script>
+
+{% endblock %}
+{% block title %} Practica 4: Pokemon GO{%endblock%}
+{% block colIzquierda %}
+      <div class="bg-light text-dark">
+      <ul class="nav flex-column">
+        <li class="nav-item"><h4 class="nav-link">Filtros</h4></li>
+        <form action="/practica4" method="get" name="formPractica4" id="formPractica4">
+          <li class = "nav-item">
+            <div class="form-group">
+              <label for="nombre">Nombre:</label><br>
+              <input type="text" name="nombre" id="nombre">
+            </div>
+          </li>
+          <li class = "nav-item">
+            <div class="form-group">
+              <label for="tipo">Tipo:</label><br>
+              <select name="tipo" id="tipo" class="w-75 text-dark ">
+                <option value="" selected>-</option>
+                <option value="Water">Agua</option>
+                <option value="Normal">Normal</option>
+                <option value="Flying">Volador</option>
+                <option value="Poison">Venenoso</option>
+                <option value="Psychic">Psíquico</option>
+                <option value="Grass">Hierba</option>
+                <option value="Ground">Tierra</option>
+                <option value="Rock">Roca</option>
+                <option value="Fighting">Lucha</option>
+                <option value="Bug">Insecto</option>
+                <option value="Fire">Fuego</option>
+                <option value="Electric">Eléctrico</option>
+                <option value="Ghost">Fantasma</option>
+                <option value="Dragon">Dragón</option>
+                <option value="Ice">Hielo</option>
+              </select>
+            </div>
+          </li>
+          <!--<li class = "nav-item">
+            <div class="form-group">
+              <label for="alturaMin">Altura mínima (m):</label><br>
+              <input type="number" id="alturaMin" step="0.1" class="w-75">
+            </div>
+          </li>
+          <li class = "nav-item">
+            <div class="form-group">
+              <label for="alturaMax">Altura máxima (m):</label><br>
+              <input type="number" id="alturaMax" step="0.1" class="w-75">
+            </div>
+          </li>
+          <li class = "nav-item">
+            <div class="form-group">
+              <label for="pesoMin">Peso mínimo (kg):</label><br>
+              <input type="number" id="pesoMin" step="0.1" class="w-75">
+            </div>
+          </li>
+          <li class = "nav-item">
+            <div class="form-group">
+              <label for="pesoMax">Peso máximo (kg):</label><br>
+              <input type="number" id="pesoMax" step="0.1" class="w-75">
+            </div>
+          </li>-->
+          <li class = "nav-item">
+            <div class="form-group">
+              <label for="tipoHuevo">Tipo de huevo:</label><br>
+              <select name="tipoHuevo" id="tipoHuevo" class="w-75">
+                <option value="" selected>-</option>
+                <option value="2 km">2 km</option>
+                <option value="5 km">5 km</option>
+                <option value="10 km">10 km</option>
+                <option value="Not in Eggs">Sin huevos</option>
+              </select>
+            </div>
+          </li>
+          <li class = "nav-item">
+            <div class="form-group">
+              <label for="evolucion">Evolución:</label><br>
+              <select name="evolucion" id="evolucion" class="w-75">
+                <option value="" selected>-</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+              </select>
+            </div>
+          </li>
+          <li class = "nav-item">
+            <div class="form-group">
+              <input type="submit" class="btn btn-primary" value="Buscar">
+            </div>
+          </li>
+        </form>
+        <li class = "nav-item"><hr style="border-width: 5px;"></li>
+        <li class = "nav-item text-center">
+          <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#modalAddPokemon"><h4 class="nav-link">Añadir pokemon</h4></button>
+        </li>
+      </ul>
+      </div>
+      <script>
+        {%if filtros["tipo"]%}
+          var filtroTipo = '{{ filtros["tipo"] | safe }}';
+          document.getElementById("tipo").value = filtroTipo;
+        {% endif %}
+        {%if filtros["tipoHuevo"]%}
+          var filtroTipoHuevo = '{{ filtros["tipoHuevo"]|safe }}';
+          document.getElementById("tipoHuevo").value = filtroTipoHuevo;
+        {% endif %}
+        {%if filtros["evolucion"]%}
+          var filtroEvol = '{{ filtros["evolucion"]|safe }}';
+          document.getElementById("evolucion").value = filtroEvol;
+        {% endif %}
+        {%if filtros["nombre"]%}
+          var filtroNombre = '{{ filtros["nombre"]|safe }}';
+          document.getElementById("nombre").value = filtroNombre;
+        {% endif %}
+      </script>
+{% endblock %}
+{% block contenido %}
+  <div class="container row text-center text-dark bg-light">
+    {% if datos|length == 0%}
+    <span>Parece que no hay pokemons por aquí, pero puedes probar con otros filtros...</span>
+    {% else %}
+      {% for pokemon in datos %}
+
+        <div class="card bg-light text-dark mb-1 mr-1" style="width: 12rem;">
+          <h5 class="card-title text-center">{{pokemon.num}}-{{pokemon.name}}</h5>
+          <img class="card-img" src="{{pokemon.img}}" alt="{{pokemon.name}}">
+          <div class="card-body  bg-light text-dark">
+            <div class="collapse-content  bg-light text-dark">
+              <p class="card-text collapse  text-left" id="contenido-{{pokemon.num}}">
+                <b>Tipo:</b> {% for tipo in pokemon.type %}
+                                {{tipo}}{% if not loop.last %},{% endif %}
+                              {% endfor %}
+                <br>
+                <b>Altura:</b> {{pokemon.height}}<br>
+                <b>Peso:</b> {{pokemon.weight}}<br>
+                <b>Huevo:</b> {{pokemon.egg}}<br>
+                <b>Probabilidad de aparición:</b> {{pokemon.spawn_chance}}<br>
+                <b>Hora de aparición:</b> {{pokemon.spawn_time}}<br>
+                <b>Debilidades:</b> {% for weakness in pokemon.weaknesses %}
+                                      {{weakness}}{% if not loop.last %},{% endif %}
+                              {% endfor %}<br>
+                <b>Evolución:</b> {{pokemon.evolucion}}<br>
+                {% if pokemon.prev_evolution %}
+                  <b>Evolucionado de:</b>
+                  {% for evolucion in pokemon.prev_evolution %}
+                    <a href="#contenido-{{evolucion.num}}" data-toggle="collapse">{{evolucion.name}}</a>
+                    {% if not loop.last %},{% endif %}
+                  {% endfor %}<br>
+                {% endif %}
+                 {% if pokemon.next_evolution %}
+                   <b>Evoluciona a:</b>
+                   {% for evolucion in pokemon.next_evolution %}
+                     <a href="#contenido-{{evolucion.num}}" data-toggle="collapse">{{evolucion.name}}</a>
+                     {% if not loop.last %},{% endif %}
+                   {% endfor %}<br>
+                 {% endif %}
+              </p>
+              <a class="btn  p-1 my-1 mr-0 mml-1 collapsed" data-toggle="collapse" href="#contenido-{{pokemon.num}}" aria-expanded="false" aria-controls="collapseContent"><i class="fas fa-info-circle"></i></a>
+              <form name="borrarPokemon" method="post" action='/borrarPokemon' onsubmit="return confirm('Vas a borrar a {{pokemon.name}}, estas seguro?')">
+                <input type="hidden" name="nombre" value="{{pokemon.name}}">
+                <input type="hidden" name="_id" value="{{pokemon._id}}">
+                <button type="submit" class="btn"><i class="fas fa-trash"></i></button>
+                <button type="button" class="btn" data-toggle="modal" data-target="#modalEditar{{pokemon.num}}"><i class="fas fa-edit"></i></button>
+                <button type="button" class=" btn botonNotif" data-hour="{{pokemon.spawn_time}}" data-img="{{pokemon.img}}" data-name="{{pokemon.name}}"><i class="fas fa-bell"></i></button>
+              </form>
+            </div>
+          </div>
+        </div>
+        <!--modal para editar -->
+        <div class="modal fade" id="modalEditar{{pokemon.num}}" tabindex="-1" role="dialog" aria-labelledby="tituloModal" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="tituloModal">Modificar pokemon</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body form-group">
+                <form name="modPokemon" method="post" action="/modificarPokemon">
+                  <input type="hidden" id="_id" name="_id" value="{{pokemon._id}}"><br>
+
+                  <label for="num">Número:</label>
+                  <input type="text" id="num" name="num" disabled value="{{pokemon.num}}"><br>
+
+                  <label for="name">Nombre:</label>
+                  <input type="text" value="{{pokemon.name}}" name="name" id="name" required><br>
+
+                  <label for="img">Imagen:</label>
+                  <input type="text" id="img" name="img" value="{{pokemon.img}}" required></input><br>
+
+                  <label for="type">Tipo:</label>
+                  <input type="text" id="type" value= "{{pokemon.type}}" disabled><br>
+
+                  <label for="height">Altura:</label>
+                  <input type="text" id="height" name="height" value="{{pokemon.height}}" required><br>
+
+                  <label for="weight">Peso:</label>
+                  <input type="text" id="weight" name="weight" value="{{pokemon.weight}}" required><br>
+
+                  <label for="candy">Caramelo:</label>
+                  <input type="text" id="candy" name="candy" value="{{pokemon.candy}}" required><br>
+
+                  <label for="candy_count">Número de caramelos:</label>
+                  <input type="number" id="candy_count" name="candy_count" value="{{pokemon.candy_count}}" step="1" required><br>
+
+                  <label for="egg">Huevo:</label>
+                  <input type="text" id="egg" name="egg" value="{{pokemon.egg}}" required><br>
+
+                  <label for="spawn_chance">Probabilidad de aparicion:</label>
+                  <input type="number" id="spawn_chance" name="spawn_chance" value="{{pokemon.spawn_chance}}" step="0.001" min="0" max="1" required><br>
+
+                  <label for="avg_spawns">Media de apariciones:</label>
+                  <input type="number" id="avg_spawns" name="avg_spawns" value="{{pokemon.avg_spawns}}" step="0.1" min="0" required><br>
+
+                  <label for="spawn_time">Hora de aparición:</label>
+                  <input type="time" id="spawn_time" name="spawn_time" value="{{pokemon.spawn_time}}" required><br>
+
+                  <label for="weaknesses">Debilidades:</label>
+                  <input type="text" id="weaknesses" value= "{{pokemon.weaknesses}}" disabled><br>
+
+                  <input type="submit" class="btn btn-primary" value="Modificar"><br>
+
+
+                </form>
+              </div>
+              <div class="mo  egg
+dal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+      </div>
+      <div class="text-center">
+        {% if "?" in url %}<!--La diferencia es el ?pagina o &pagina-->
+          {% if page > 0 %}
+            <a href="{{url}}&page={{page - 1}}">Página anterior<i class="fas fa-arrow-left"></i></a> |
+          {% endif %}
+          <a href="{{url}}&page={{page + 1}}"><i class="fas fa-arrow-right"></i>Página siguiente</a>
+        {% else %}
+          {% if page > 0 %}
+            <a href="{{url}}?page={{page - 1}}">Página anterior<i class="fas fa-arrow-left"></i></a> |
+          {% endif %}
+          <a href="{{url}}?page={{page + 1}}"><i class="fas fa-arrow-right"></i>Página siguiente</a>
+        {% endif %}
+    {% endif %}
+
+
+  </div>
+
+  <!--modal para añadir -->
+  <div class="modal fade" id="modalAddPokemon" tabindex="-1" role="dialog" aria-labelledby="tituloModal" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="tituloModal">Añadir pokemon</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body form-group text-center">
+          <form name="addPokemon" method="post" action="/addPokemon">
+
+            <label for="name">Nombre:</label>
+            <input type="text" name="name" id="name" required><br>
+
+            <label for="img">Imagen:</label>
+            <input type="text" id="img" name="img" required></input><br>
+
+            <label for="type">Tipo:</label>
+            <select name="type" id="type" class="w-75" multiple required>
+              <option value="Water">Agua</option>
+              <option value="Normal">Normal</option>
+              <option value="Flying">Volador</option>
+              <option value="Poison">Venenoso</option>
+              <option value="Psychic">Psíquico</option>
+              <option value="Grass">Hierba</option>
+              <option value="Ground">Tierra</option>
+              <option value="Rock">Roca</option>
+              <option value="Fighting">Lucha</option>
+              <option value="Bug">Insecto</option>
+              <option value="Fire">Fuego</option>
+              <option value="Electric">Eléctrico</option>
+              <option value="Ghost">Fantasma</option>
+              <option value="Dragon">Dragón</option>
+              <option value="Ice">Hielo</option>
+            </select><br>
+
+            <label for="height">Altura(m):</label>
+            <input type="number" id="height" name="height" required step=0.01 min=0><br>
+
+            <label for="weight">Peso(kg):</label>
+            <input type="number" id="weight" name="weight" required  step=0.01 min=0><br>
+
+            <label for="candy">Caramelo:</label>
+            <input type="text" id="candy" name="candy" required><br>
+
+            <label for="candy_count">Número de caramelos:</label>
+            <input type="number" id="candy_count" name="candy_count" step="1" required><br>
+
+            <label for="egg">Huevo:</label>
+            <select name="egg" id="egg" class="w-75" required>
+              <option value="2 km">2 km</option>
+              <option value="5 km">5 km</option>
+              <option value="10 km">10 km</option>
+              <option value="Not in Eggs">Sin huevos</option>
+            </select>
+
+            <label for="spawn_chance">Probabilidad de aparicion:</label>
+            <input type="number" id="spawn_chance" name="spawn_chance" step="0.001" min="0" max="1" required><br>
+
+            <label for="avg_spawns">Media de apariciones:</label>
+            <input type="number" id="avg_spawns" name="avg_spawns" step="0.1" min="0" required><br>
+
+            <label for="spawn_time">Hora de aparición:</label>
+            <input type="time" id="spawn_time" name="spawn_time" required><br>
+
+            <label for="multiplier">Multiplicador:</label>
+            <input type="number" id="multiplier" name="multiplier" step="0.1" required><br>
+
+            <label for="weaknesses">Debilidades:</label>
+            <select name="weaknesses" id="weaknesses" class="w-75" multiple required>
+              <option value="Water">Agua</option>
+              <option value="Normal">Normal</option>
+              <option value="Flying">Volador</option>
+              <option value="Poison">Venenoso</option>
+              <option value="Psychic">Psíquico</option>
+              <option value="Grass">Hierba</option>
+              <option value="Ground">Tierra</option>
+              <option value="Rock">Roca</option>
+              <option value="Fighting">Lucha</option>
+              <option value="Bug">Insecto</option>
+              <option value="Fire">Fuego</option>
+              <option value="Electric">Eléctrico</option>
+              <option value="Ghost">Fantasma</option>
+              <option value="Dragon">Dragón</option>
+              <option value="Ice">Hielo</option>
+            </select><br>
+
+            <label for="next_evolution">Evoluciona en (número del pokemon):</label>
+            <input type="number" name="next_evolution" id="next_evolution" min="1" max="500" step="1"><br>
+
+            <label for="prev_evolution">Evoluciona de (número del pokemon):</label>
+            <input type="number" name="prev_evolution" id="prev_evolution" min="1" max="500" step="1"><br>
+
+            <input type="submit" class="btn btn-primary" value="Enviar"><br>
+
+
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+{%endblock%}

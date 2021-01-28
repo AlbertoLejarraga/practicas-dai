@@ -1,0 +1,73 @@
+{% extends "./base.html" %}
+
+{% block title %} Practica 8: Pokemon GO{%endblock%}
+{% block scripts %}
+
+{% endblock %}
+{% block colIzquierda %}
+      <ul class="nav flex-column">
+        <li class="nav-item"><h4 class="nav-link">Filtros</h4></li>
+        <div class=" bg-light text-dark">
+          <li class = "nav-item">
+            <div class="form-group  bg-light text-dark">
+              <label for="nombre">Nombre:</label><br>
+              <input type="text" name="nombre" id="nombre" class="bg-light" placeholder="-----">
+            </div>
+          </li>
+          <li class = "nav-item">
+            <div class="form-group  bg-light text-dark">
+              <label for="tipo">Tipo:</label><br>
+              <select name="tipo" id="tipo" class="w-75">
+                <option value="" selected>-</option>
+                <option value="Water">Agua</option>
+                <option value="Normal">Normal</option>
+                <option value="Flying">Volador</option>
+                <option value="Poison">Venenoso</option>
+                <option value="Psychic">Psíquico</option>
+                <option value="Grass">Hierba</option>
+                <option value="Ground">Tierra</option>
+                <option value="Rock">Roca</option>
+                <option value="Fighting">Lucha</option>
+                <option value="Bug">Insecto</option>
+                <option value="Fire">Fuego</option>
+                <option value="Electric">Eléctrico</option>
+                <option value="Ghost">Fantasma</option>
+                <option value="Dragon">Dragón</option>
+                <option value="Ice">Hielo</option>
+              </select>
+            </div>
+          </li>
+          <li class = "nav-item">
+            <div class="form-group bg-light text-dark">
+              <label for="tipoHuevo">Tipo de huevo:</label><br>
+              <select name="tipoHuevo" id="tipoHuevo" class="w-75">
+                <option value="" selected>-</option>
+                <option value="2 km">2 km</option>
+                <option value="5 km">5 km</option>
+                <option value="10 km">10 km</option>
+                <option value="Not in Eggs">Sin huevos</option>
+              </select>
+            </div>
+          </li>
+          <li class = "nav-item">
+            <div class="form-group bg-light text-dark">
+              <label for="evolucion">Evolución:</label><br>
+              <select name="evolucion" id="evolucion" class="w-75">
+                <option value="" selected>-</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+              </select>
+            </div>
+          </li>
+
+        </div>
+        <button type="button" class="btn btn-secondary" id="botonNotif">Notificar</button>
+      </ul>
+{% endblock %}
+{% block contenido %}
+  <div class="container row text-center bg-light text-dark" id="tablaContP8">
+
+  </div>
+
+{%endblock%}
