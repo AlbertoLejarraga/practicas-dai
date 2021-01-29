@@ -14,3 +14,5 @@ Repositorio para publicar las prácticas de la asignatura DAI 2020
 * [Resolución](https://github.com/AlbertoLejarraga/practicas-dai/tree/main/practica6)
 ## Practica 8: Front end con jQuery
 * [Resolución](https://github.com/AlbertoLejarraga/practicas-dai/tree/main/practica8)
+## Practica 10: Práctica libre basada en Javascript
+* [Resolución](https://github.com/AlbertoLejarraga/practicas-dai/tree/main/practica10)

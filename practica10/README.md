@@ -1,7 +1,17 @@
-# Práctica 8
+# Práctica 10
 
-Se crea una aplicación web basada en los métodos GET y DELETE de la API REST desarrollada en la práctica 5.
+Esta práctica es una práctica libre basada en Javascript.
 
-Para ello, se utiliza el mismo sitio web que se había venido utilizando y se le añade una pestaña en la parte de arriba (Práctica 8).
+Se desarrollan dos aspectos:
 
-El entorno es similar al desarrollado en la práctica 4 pero en este caso la obtención y eliminación de datos se produce mediante llamadas a AJAX, lo que permite realizar estas operaciones sin salir del sitio web y de forma más ágil para el usuario.
+* Análisis descriptivo de los datos
+Se generan una serie de gráficos con la librería [ChartJS](https://www.chartjs.org/) sobre los distintos pokemons de la base de datos.
+Los ficheros afectados, principalmente, son:
+    * [Fichero .js donde se general los gráficos](https://github.com/AlbertoLejarraga/practicas-dai/tree/main/practica/app/static/js/practica10.js)
+    * [Fichero html base](https://github.com/AlbertoLejarraga/practicas-dai/tree/main/practica/app/templates/practica10.html)
+
+* Notificaciones de salida de un pokemon
+Según la base de datos utilizada, cada pokemon sale a una hora determinada. Se desarrolla un sistema de notificaciones a la hora en la que un pokemon sale y se le puede cazar. Esto solo funciona en navegadores basados en Chromium. Los ficheros son:
+    * [ServiceWorker](https://github.com/AlbertoLejarraga/practicas-dai/tree/main/practica/app/static/js/service-worker.js)
+    * [Gestor de notificaciones](https://github.com/AlbertoLejarraga/practicas-dai/tree/main/practica/app/static/js/notificaciones.js)
+    * [Fichero de la práctica 4](https://github.com/AlbertoLejarraga/practicas-dai/tree/main/practica/app/templates/practica4.html) sobre el que se añade un símbolo para activar las notificaciones. En la página debe haber un solo pokemon,utilizando para ello los filtros adecuados.
